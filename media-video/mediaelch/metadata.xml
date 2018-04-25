@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>expeditioneer@gentoo.org</email>
+		<name>Dennis Lamm</name>
+	</maintainer>
+	<longdescription>
+		MediaElch is a free MediaManager for movies and tv shows. It supports generating of nfo files and also directly manipulating XBMCs database (SQLite). Posters, thumbnails, screenshots and actor images will be stored along movies and tv shows (when using nfos) or directly in KODIs thumbnail folder.
+	</longdescription>
+</pkgmetadata>
