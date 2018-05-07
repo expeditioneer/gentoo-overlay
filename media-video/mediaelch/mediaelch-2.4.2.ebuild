@@ -1,7 +1,7 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 inherit qmake-utils eutils multilib
 
 DESCRIPTION="Video metadata scraper"
@@ -28,12 +28,12 @@ DEPEND="dev-qt/qtsql:5
 
 src_configure()
 {
-	cd ${WORKDIR}/${P} || die
+	cd "${WORKDIR}/${P}" || die
 	eqmake5 || die
 }
 
 src_install()
 {
-	cd ${WORKDIR}/${P} || die
+	cd "${WORKDIR}/${P}" || die
 	INSTALL_ROOT=${D} einstall || die
 }
