@@ -3,9 +3,9 @@
 
 EAPI=6
 
-DESCRIPTION="Client tools for heroku"
-HOMEPAGE="http://heroku.com"
-SRC_URI="https://cli-assets.heroku.com/heroku-v${PV}/heroku-v${PV}-win32-x64.tar.gz"
+DESCRIPTION="The Heroku CLI is used to manage Heroku apps from the command line"
+HOMEPAGE="https://heroku.com"
+SRC_URI="https://github.com/heroku/cli/archive/v${PV}.tar.gz"
 
 LICENSE="ISC"
 SLOT="0"
@@ -15,7 +15,7 @@ IUSE=""
 DEPEND=""
 RDEPEND="dev-lang/ruby"
 
-S="${WORKDIR}/heroku"
+S="${WORKDIR}/cli-${PV}"
 
 src_unpack() {
 	unpack ${A}
@@ -23,7 +23,7 @@ src_unpack() {
 
 src_install() {
 	dodir "/usr/local/heroku"
-	cp --recursive "${S}"/ "${D}"/usr/local/heroku/
+	cp --recursive "${S}/${D}/usr/local/heroku/"
 	dodir "/usr/local/bin"
 	dosym ../heroku/bin/heroku /usr/local/bin/heroku
 }
