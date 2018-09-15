@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>expeditioneer@gentoo.org</email>
+		<name>Dennis Lamm</name>
+	</maintainer>
+	<longdescription>
+		pyasn is a Python extension module that enables very fast IP address to Autonomous System Number lookups.
+		Current state and Historical lookups can be done, based on the MRT/RIB BGP archive used as input.
+	</longdescription>
+</pkgmetadata>
