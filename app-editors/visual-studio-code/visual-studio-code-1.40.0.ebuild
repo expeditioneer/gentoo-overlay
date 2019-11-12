@@ -1,23 +1,20 @@
-# Copyright 1999-2018 Gentoo Foundation
+# Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI="7"
 
-inherit eutils pax-utils
+inherit desktop eutils pax-utils
 
 DESCRIPTION="Multiplatform Visual Studio Code from Microsoft"
 HOMEPAGE="https://code.visualstudio.com"
 LICENSE="MIT"
 
-SRC_URI="
-		x86? ( https://vscode-update.azurewebsites.net/${PV}/linux-ia32/stable ->  ${P}-x86.tar.gz )
-		amd64? ( https://vscode-update.azurewebsites.net/${PV}/linux-x64/stable -> ${P}-amd64.tar.gz )
-"
+SRC_URI="https://vscode-update.azurewebsites.net/${PV}/linux-x64/stable -> ${P}-amd64.tar.gz"
 
 RESTRICT="bindist mirror strip"
 
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND="
@@ -38,10 +35,7 @@ RDEPEND="
 
 QA_PRESTRIPPED="opt/${PN}/code"
 QA_PREBUILT="opt/${PN}/code"
-
-pkg_setup(){
-		use amd64 && S="${WORKDIR}/VSCode-linux-x64" || S="${WORKDIR}/VSCode-linux-ia32"
-}
+S="${WORKDIR}/VSCode-linux-x64"
 
 src_install(){
 		pax-mark m code
@@ -54,7 +48,7 @@ src_install(){
 
 		fperms +x "/opt/${PN}/code"
 		fperms +x "/opt/${PN}/bin/code"
-		fperms +x "/opt/${PN}/libnode.so"
+		#fperms +x "/opt/${PN}/libnode.so"
 		fperms +x "/opt/${PN}/resources/app/node_modules.asar.unpacked/vscode-ripgrep/bin/rg"
 
 		insinto "/usr/share/licenses/${PN}"
