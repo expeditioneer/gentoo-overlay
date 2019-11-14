@@ -7,7 +7,7 @@
 ## Using with Portage
 Create a new config file under `/etc/portage/repos.conf/expeditioneer.conf` with the following contents:
 
-	[fritteli]
+	[expeditioneer]
 	auto-sync = yes
 	location = /usr/local/portage/overlays/expeditioneer
 	sync-type = git
