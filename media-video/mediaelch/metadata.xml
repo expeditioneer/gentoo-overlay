@@ -8,4 +8,7 @@
 	<longdescription>
 		MediaElch is a free MediaManager for movies and tv shows. It supports generating of nfo files and also directly manipulating XBMCs database (SQLite). Posters, thumbnails, screenshots and actor images will be stored along movies and tv shows (when using nfos) or directly in KODIs thumbnail folder.
 	</longdescription>
+	<use>
+		<flag name="lto">Adds support for link time optimization</flag>
+	</use>
 </pkgmetadata>
