@@ -16,7 +16,7 @@ Create a new config file under `/etc/portage/repos.conf/expeditioneer.conf` with
 
 You may adapt the `location` attribute to your system's own setup.
 
-# Bug reports and ebuild requests
+## Bug reports and ebuild requests
 
 If you find a bug in an ebuild, encounter a build error or would like me to add a new ebuild, please open an issue on [GitHub](https://github.com/expeditioneer/gentoo-overlay/issues).
 
@@ -24,9 +24,8 @@ If you find a bug in an ebuild, encounter a build error or would like me to add 
 
 I gladly accept pull requests for bugs or new ebuilds. Before opening a pull request, please make sure your changes don't upset [`repoman`](https://wiki.gentoo.org/wiki/Repoman). Run the following command and fix warnings and errors:
 
-	repoman -x -p
+	repoman --xmlparse --pretend
 
 ## Acknowledgements
 
 Thanks go to Jakub Jirutka, the maintainer of the [CVUT Overlay](https://github.com/cvut/gentoo-overlay), from whom I shamelessly copied this README.md for a start.
-
