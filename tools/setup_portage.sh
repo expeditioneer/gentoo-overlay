@@ -23,7 +23,7 @@ portage_extracted_directory=${temporary_directory}/portage-archive
 mkdir "${portage_extracted_directory}"
 curl --location --silent "https://github.com/gentoo/portage/archive/portage-${PORTAGE_VERSION}.tar.gz" | tar --extract --gzip --directory="${portage_extracted_directory}" --strip-components=1
 
-"${portage_extracted_directory}/setup.py" -O2 --system-prefix="${PORTAGE_ROOT}/usr" --sysconfdir="${PORTAGE_ROOT}/etc"
+"${portage_extracted_directory}/setup.py" install -O2 --system-prefix="${PORTAGE_ROOT}/usr" --sysconfdir="${PORTAGE_ROOT}/etc"
 
 mkdir --parents "${PORTAGE_ROOT}/usr/lib/portage/cnf/"
 cp "${portage_extracted_directory}/cnf/metadata.dtd" "${DISTDIR}/"
