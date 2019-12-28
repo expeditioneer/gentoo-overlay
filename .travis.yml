@@ -43,7 +43,7 @@ install:
 
 
 script:
-  - repoman full --include-dev"
+  - repoman full --include-dev
 
 after_success:
   - bash <(curl --silent https://copilot.blackducksoftware.com/ci/travis/scripts/upload)
