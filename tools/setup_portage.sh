@@ -43,7 +43,7 @@ main-repo = gentoo
 [gentoo]
 location = ${gentoo_tree_dir}
 
-[overlay]
+[expeditioneer]
 location = ${TRAVIS_BUILD_DIR}
 _EOF_
 
