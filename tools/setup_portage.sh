@@ -50,10 +50,9 @@ _EOF_
 cat "${portage_conf_dir}/repos.conf/repos"
 
 cat > "${portage_conf_dir}/make.conf" << _EOF_
-DISTDIR="$(mktemp --directory)"
-PKGDIR="$(mktemp --directory)"
-PORTAGE_TMPDIR="$(mktemp --directory)"
-RPMDIR="$(mktemp --directory)"
+PORTDIR="${gentoo_tree_dir}"
+DISTDIR="${gentoo_tree_dir}/distfiles"
+PKGDIR="${gentoo_tree_dir}/packages"
 _EOF_
 
 cat "${portage_conf_dir}/make.conf"
