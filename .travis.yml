@@ -25,7 +25,8 @@ install:
 before_script:
   - pip install PyYAML
 #  - pip install lxml
-#  - sudo chmod a+rwX /etc/passwd /etc/group /etc /var /var/cache
+
+  - sudo chmod a+rwX /etc/passwd /etc/group /etc /var /var/cache
 #  - mkdir -p travis-overlay /etc/portage /var/cache/distfiles /var/db/repos/gentoo
 #  - mv !(travis-overlay) travis-overlay/
 #  - mv .git travis-overlay/

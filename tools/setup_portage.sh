@@ -13,7 +13,7 @@ if [ -z "${PORTAGE_VERSION}" ]; then
   exit 1
 fi
 
-
+# TODO: remove me only for testing
 PORTAGE_VERSION="2.3.68"
 echo -e "\e[33m Used Portage version is: ${PORTAGE_VERSION}"
 
