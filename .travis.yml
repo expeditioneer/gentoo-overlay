@@ -19,17 +19,13 @@ env:
 
 install:
   - tools/setup_portage.bash
-  #- tools/add_required_user_and_group.bash
+  - tools/add_required_user_and_group.bash
   - export PATH="${PORTAGE_ROOT}/usr/bin:${PATH}"
   - export PORTAGE_CONFIGROOT="${PORTAGE_ROOT}" ROOT="${PORTAGE_ROOT}"
 
 before_script:
   - pip install PyYAML
-  - export PORTAGE_UID=250
-  - export PORTAGE_GID=250
-  - sudo groupadd --gid "${PORTAGE_GID}" portage
-  - sudo useradd --uid "${PORTAGE_UID}" --gid "${PORTAGE_GID}" --home /var/tmp/portage --shell /bin/false portage
-  - sudo usermod --append --groups portage travis
+
 #  - pip install lxml
 
   #- sudo chmod a+rwX /etc/passwd /etc/group /etc /var /var/cache
@@ -44,7 +40,7 @@ before_script:
 #  - echo "portage:x:250:250:portage:/var/tmp/portage:/bin/false" >> /etc/passwd
 #  - echo "portage::250:portage,travis" >> /etc/group
 
-#  - ln -s /var/db/repos/gentoo/profiles/default/linux/amd64/17.0 /etc/portage/make.profile
+#  -
 
 
 #  - cd travis-overlay

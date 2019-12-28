@@ -34,7 +34,7 @@ sudo mkdir --parents /usr/share/repoman/qa_data
 sudo cp "${portage_extracted_directory}/repoman/cnf/qa_data/qa_data.yaml" /usr/share/repoman/qa_data/
 
 rm --recursive --force "${temporary_directory}"
-mkdir --parents "${PORTAGE_ROOT}/usr/lib/portage/cnf/"
+mkdir --parents "${PORTAGE_ROOT}/usr/lib/portage/"
 
 mkdir --parents "${gentoo_tree_dir}"
 curl --location --silent "https://github.com/gentoo-mirror/gentoo/archive/master.tar.gz" | tar --extract --gzip --directory="${gentoo_tree_dir}" --strip-components=1
@@ -52,8 +52,6 @@ location = ${gentoo_tree_dir}
 location = ${TRAVIS_BUILD_DIR}
 _EOF_
 
-cat "${portage_conf_dir}/repos.conf/repos"
-
 cat > "${portage_conf_dir}/make.conf" << _EOF_
 PORTAGE_TMPDIR="$(mktemp --directory)"
 PKGDIR="$(mktemp --directory)"
@@ -61,7 +59,5 @@ DISTDIR="$(mktemp --directory)"
 RPMDIR="$(mktemp --directory)"
 _EOF_
 
-cat "${portage_conf_dir}/make.conf"
-
-ln --symbolic "${gentoo_tree_dir}/profiles/base" "${portage_conf_dir}/make.profile"
+ln --symbolic "${gentoo_tree_dir}/profiles/default/linux/${TRAVIS_CPU_ARCH}/17.1" /etc/portage/make.profile
 
