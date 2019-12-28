@@ -43,7 +43,6 @@ install:
 
 
 script:
-  - emerge -v app-portage/repoman
   - repoman full --include-dev
 
 after_success:

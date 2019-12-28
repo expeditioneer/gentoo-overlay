@@ -31,6 +31,9 @@ curl --location --silent "https://github.com/gentoo/portage/archive/portage-${PO
 
 cd "${portage_extracted_directory}"
 ./setup.py install -O2 --system-prefix="${PORTAGE_ROOT}/usr" --sysconfdir="${PORTAGE_ROOT}/etc"
+cd "${portage_extracted_directory}/repoman"
+./setup.py install
+
 rm --recursive --force "${temporary_directory}"
 mkdir --parents "${PORTAGE_ROOT}/usr/lib/portage/cnf/"
 
@@ -53,9 +56,8 @@ _EOF_
 cat "${portage_conf_dir}/repos.conf/repos"
 
 cat > "${portage_conf_dir}/make.conf" << _EOF_
-PORTDIR=${gentoo_tree_dir}
-DISTDIR=${gentoo_tree_dir}/distfiles
-PKGDIR=${gentoo_tree_dir}/packages
+DISTDIR="$(mktemp --directory)"
+PKGDIR="$(mktemp --directory)"
 _EOF_
 
 cat "${portage_conf_dir}/make.conf"
