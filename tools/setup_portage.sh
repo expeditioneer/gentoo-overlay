@@ -32,7 +32,7 @@ cd "${portage_extracted_directory}"
 ./setup.py install -O2 --system-prefix="${PORTAGE_ROOT}/usr" --sysconfdir="${PORTAGE_ROOT}/etc"
 cd "${portage_extracted_directory}/repoman"
 ./setup.py install -O2 --system-prefix="${PORTAGE_ROOT}/usr" --sysconfdir="${PORTAGE_ROOT}/etc"
-mkdir --parents /usr/share/repoman/qa_data
+sudo mkdir --parents /usr/share/repoman/qa_data
 cp "${portage_extracted_directory}/repoman/cnf/qa_data/qa_data.yaml" /usr/share/repoman/qa_data
 
 rm --recursive --force "${temporary_directory}"
