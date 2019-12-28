@@ -59,5 +59,5 @@ DISTDIR="$(mktemp --directory)"
 RPMDIR="$(mktemp --directory)"
 _EOF_
 
-ln --symbolic "${gentoo_tree_dir}/profiles/default/linux/${TRAVIS_CPU_ARCH}/17.1" /etc/portage/make.profile
+ln --symbolic "${gentoo_tree_dir}/profiles/default/linux/${TRAVIS_CPU_ARCH}/17.1" "${portage_conf_dir}/make.profile"
 
