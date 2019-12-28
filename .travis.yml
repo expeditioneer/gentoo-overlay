@@ -14,12 +14,15 @@ env:
   global:
     - secure: as/AwjrTltq8gubJrcuZM8brtg2Dy/qVaNFETvenjIfHVGEwdGbvTvbdrvtD1qBr3adHI4Qd2TcBOfanTE6EW2gGq6wsLlUSCT8H69kpU4aG1vgX8D8h2zJr0ZaG8dYZOLm2isaLy7FzbdsfzgqrYshQLECdgcJod7wM43xLGqlO1sQxi0FehHVaFSCu1FW7TFAnpDM3rlk9G8kU23B1rYD+1/p0KnmQ/qIyXeCDQfHlRfPeA6Ly57ABeJWHMECeL/Jcxhj9eOEWyXObW9XgWqBIpzxFKVSWy+mJD4KoAB3MyD2mBosCYn65j6Q+NWZZoNl/HKnheekGNzXl/gAIeLaYhEzfF87K1E8JZb645XGNsl7jf55zyDlX0r4NM1fyCxRdZ02oM2t74upqqNHMdQNHoEM7UTJk7kYx+M6UWYX6RFcb9ICjRAYX8jg4ptjfiFOTH9XBTcKWopkBf9tBhIaP4e63qY+Nsx6vyZkEen09rxViT+rgZ3X97AtFPslhsJm+8Bto9w9fsToL4Zpm691GdQPe5rjtBD+feSxSIBvRKJZEoRsL84UZKeE9Nd+8PIbAuN9IDJsFDvRcZLFvZBtiAzh2NPGofIXOBYC7RvKwsFH5mFMBXNAJCNwKvDP0giOt4qtvFLnrBRDa1siXDAmTSe1WqWxh+XM8IhH0q8w=
     - PORTAGE_ROOT="$(mktemp --directory)"
+    - PORTAGE_VERSION="$(tools/get_latest_portage_version.sh)"
 
 before_install:
-  - export LATEST_PORTAGE_VERSION="$(tools/get_latest_portage_version.sh)"
+  - echo "Portage Version is ${PORTAGE_VERSION}"
+#  - export LATEST_PORTAGE_VERSION="$(tools/get_latest_portage_version.sh)"
 
 install:
-  - echo "Latest Portage Version is ${LATEST_PORTAGE_VERSION}"
+#  - echo "Portage Version is ${PORTAGE_VERSION}"
+#  - echo "Latest Portage Version is ${LATEST_PORTAGE_VERSION}"
   - export PATH="${PORTAGE_ROOT}/usr/bin:${PATH}"
   - export PORTAGE_CONFIGROOT="${PORTAGE_ROOT}" ROOT="${PORTAGE_ROOT}"
 
@@ -41,12 +44,12 @@ install:
 #  - SIZE=$(stat -c %s .travis.yml.upstream)
 #  - if ! cmp -n $SIZE -s .travis.yml .travis.yml.upstream; then echo -e "\e[31m !!! .travis.yml outdated! Update available https://github.com/mrueg/repoman-travis \e[0m" > /tmp/update ; fi
 #  - cd travis-overlay
+#
+#script:
+#  - repoman full --include-dev"
+#after_success:
+#  - bash <(curl --silent https://copilot.blackducksoftware.com/ci/travis/scripts/upload)
 
-script:
-  - repoman full --include-dev"
-after_success:
-  - bash <(curl --silent https://copilot.blackducksoftware.com/ci/travis/scripts/upload)
-
-notifications:
-  email:
-    on_failure: change
+#notifications:
+#  email:
+#    on_failure: change
