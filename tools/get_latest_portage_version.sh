@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -ev
+
 if [ -z "${GITHUB_GRAPHQL_QUERY_TOKEN}" ]; then
   echo "GITHUB_GRAPHQL_QUERY_TOKEN not set"
   exit 1
