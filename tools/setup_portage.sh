@@ -26,6 +26,6 @@ curl --location --silent "https://github.com/gentoo/portage/archive/portage-${PO
 cd "${portage_extracted_directory}"
 
 ./setup.py install -O2 --system-prefix="${PORTAGE_ROOT}/usr" --sysconfdir="${PORTAGE_ROOT}/etc"
-cp "cnf/metadata.dtd" "${DISTDIR}/"
+cp cnf/metadata.dtd "${DISTDIR}/"
 
 mkdir --parents "${PORTAGE_ROOT}/usr/lib/portage/cnf/"
