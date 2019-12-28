@@ -14,7 +14,7 @@ if [ -z "${PORTAGE_VERSION}" ]; then
 fi
 
 
-PORTAGE_VERSION="2.2.28"
+PORTAGE_VERSION="2.3.68"
 echo -e "\e[33m Used Portage version is: ${PORTAGE_VERSION}"
 
 temporary_directory="$(mktemp --directory)"
