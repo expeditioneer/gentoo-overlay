@@ -19,12 +19,16 @@ env:
 
 install:
   - tools/setup_portage.bash
-  - sudo tools/add_required_user_and_group.bash
+  #- tools/add_required_user_and_group.bash
   - export PATH="${PORTAGE_ROOT}/usr/bin:${PATH}"
   - export PORTAGE_CONFIGROOT="${PORTAGE_ROOT}" ROOT="${PORTAGE_ROOT}"
 
 before_script:
   - pip install PyYAML
+  - export PORTAGE_UID=250
+  - export PORTAGE_GID=250
+  - sudo useradd --uid "${PORTAGE_UID}" --gid "${PORTAGE_GID}" --user-group --home /var/tmp/portage --shell /bin/false portage
+  - sudo usermod --append --groups portage travis
 #  - pip install lxml
 
   #- sudo chmod a+rwX /etc/passwd /etc/group /etc /var /var/cache
