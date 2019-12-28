@@ -43,7 +43,7 @@ main-repo = gentoo
 [gentoo]
 location = ${gentoo_tree_dir}
 
-[${TRAVIS_REPO_SLUG}]
+[${TRAVIS_REPO_SLUG | cut --delimiter='/' --fields=1 }]
 location = ${TRAVIS_BUILD_DIR}
 _EOF_
 
