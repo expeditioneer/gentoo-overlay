@@ -22,7 +22,8 @@ install:
   - export PATH="${PORTAGE_ROOT}/usr/bin:${PATH}"
   - export PORTAGE_CONFIGROOT="${PORTAGE_ROOT}" ROOT="${PORTAGE_ROOT}"
 
-#before_script:
+before_script:
+  - pip install PyYAML
 #  - sudo chmod a+rwX /etc/passwd /etc/group /etc /var /var/cache
 #  - mkdir -p travis-overlay /etc/portage /var/cache/distfiles /var/db/repos/gentoo
 #  - mv !(travis-overlay) travis-overlay/
