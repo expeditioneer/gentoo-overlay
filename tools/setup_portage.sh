@@ -32,7 +32,7 @@ curl --location --silent "https://github.com/gentoo/portage/archive/portage-${PO
 cd "${portage_extracted_directory}"
 ./setup.py install -O2 --system-prefix="${PORTAGE_ROOT}/usr" --sysconfdir="${PORTAGE_ROOT}/etc"
 cd "${portage_extracted_directory}/repoman"
-./setup.py install
+./setup.py install -O2 --system-prefix="${PORTAGE_ROOT}/usr" --sysconfdir="${PORTAGE_ROOT}/etc"
 
 rm --recursive --force "${temporary_directory}"
 mkdir --parents "${PORTAGE_ROOT}/usr/lib/portage/cnf/"
