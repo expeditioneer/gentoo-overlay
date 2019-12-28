@@ -16,10 +16,10 @@ env:
     - PORTAGE_ROOT="$(mktemp --directory)"
 
 before_install:
-  - export LATEST_PORTAGE_VERSION="1.2.3"
+  - export LATEST_PORTAGE_VERSION="$(tools/get_latest_portage_version.sh)"
 
 install:
-  - tools/get_latest_portage_version.sh
+  - echo "Latest Portage Version is ${LATEST_PORTAGE_VERSION}"
   - export PATH="${PORTAGE_ROOT}/usr/bin:${PATH}"
   - export PORTAGE_CONFIGROOT="${PORTAGE_ROOT}" ROOT="${PORTAGE_ROOT}"
 
