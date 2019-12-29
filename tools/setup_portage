@@ -16,11 +16,7 @@ echo -e "\e[33m Used Portage version is: ${PORTAGE_VERSION}"
 
 temporary_directory="$(mktemp --directory)"
 
-gentoo_tree_dir="${PORTAGE_ROOT}/usr/portage"
-portage_conf_dir="${PORTAGE_ROOT}/etc/portage"
 
-#mkdir --parents "${PORTAGE_ROOT}/usr/lib64"
-#ln --symbolic lib64 "${PORTAGE_ROOT}/usr/lib"
 
 portage_extracted_directory=${temporary_directory}/portage-archive
 mkdir "${portage_extracted_directory}"
@@ -33,12 +29,15 @@ sudo mkdir --parents /usr/share/repoman/qa_data
 sudo cp "${portage_extracted_directory}/repoman/cnf/qa_data/qa_data.yaml" /usr/share/repoman/qa_data/
 
 rm --recursive --force "${temporary_directory}"
-mkdir --parents "${PORTAGE_ROOT}/usr/lib/portage/"
+#mkdir --parents "${PORTAGE_ROOT}/usr/lib/portage/"
 
+gentoo_tree_dir="${PORTAGE_ROOT}/usr/portage"
 mkdir --parents "${gentoo_tree_dir}"
 curl --location --silent "https://github.com/gentoo-mirror/gentoo/archive/master.tar.gz" | tar --extract --gzip --directory="${gentoo_tree_dir}" --strip-components=1
 
 
+
+portage_conf_dir="${PORTAGE_ROOT}/etc/portage"
 mkdir -p "${portage_conf_dir}/repos.conf"
 cat > "${portage_conf_dir}/repos.conf/repos" << _EOF_
 [DEFAULT]
