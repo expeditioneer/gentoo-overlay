@@ -2,7 +2,6 @@
 
 set -e
 
-
 if [ -z "${PORTAGE_ROOT}" ]; then
   echo "PORTAGE_ROOT not set"
   exit 1
@@ -20,8 +19,8 @@ temporary_directory="$(mktemp --directory)"
 gentoo_tree_dir="${PORTAGE_ROOT}/usr/portage"
 portage_conf_dir="${PORTAGE_ROOT}/etc/portage"
 
-mkdir --parents "${PORTAGE_ROOT}/usr/lib64"
-ln --symbolic lib64 "${PORTAGE_ROOT}/usr/lib"
+#mkdir --parents "${PORTAGE_ROOT}/usr/lib64"
+#ln --symbolic lib64 "${PORTAGE_ROOT}/usr/lib"
 
 portage_extracted_directory=${temporary_directory}/portage-archive
 mkdir "${portage_extracted_directory}"
