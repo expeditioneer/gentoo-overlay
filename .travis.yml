@@ -18,7 +18,6 @@ env:
     - PORTAGE_VERSION="$(tools/get_latest_portage_version)"
 
 install:
-  - chmod +x tools/add_required_user_and_group
   - tools/install_portage
   - tools/setup_portage
   - tools/add_required_user_and_group
