@@ -19,6 +19,7 @@ env:
 
 install:
   - chmod +x tools/add_required_user_and_group
+  - tools/install_portage
   - tools/setup_portage
   - tools/add_required_user_and_group
   - export PATH="${PORTAGE_ROOT}/usr/bin:${PATH}"
