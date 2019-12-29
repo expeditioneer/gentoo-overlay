@@ -1,8 +1,7 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
-#inherit cmake-utils qmake-utils eutils
+EAPI="7"
 
 : ${CMAKE_MAKEFILE_GENERATOR:=ninja}
 inherit cmake-utils
@@ -15,20 +14,6 @@ KEYWORDS="~amd64"
 LICENSE="GPL-3"
 SLOT="0"
 IUSE="lto"
-
-#DEPEND="dev-qt/qtsql:5
-#		dev-qt/qtscript:5
-#		dev-qt/qtquickcontrols:5
-#		dev-qt/qtxmlpatterns:5
-#		dev-qt/qtcore:5
-#		dev-qt/qtgui:5
-#		media-video/mediainfo
-#		media-libs/libzen
-#		media-libs/phonon
-#		dev-libs/quazip
-#		dev-qt/qtconcurrent:5
-#		dev-qt/qtmultimedia:5[widgets]
-#		dev-qt/qtscript:5"
 
 DEPEND="
 	dev-libs/quazip
