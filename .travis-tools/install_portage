@@ -12,7 +12,7 @@ if [ -z "${PORTAGE_VERSION}" ]; then
   exit 1
 fi
 
-echo -e "\e[1;33m Used Portage version is: ${PORTAGE_VERSION}"
+echo -e "\e[1;33mUsed Portage version is: ${PORTAGE_VERSION}"
 
 temporary_directory="$(mktemp --directory)"
 portage_extracted_directory=${temporary_directory}/portage-archive
