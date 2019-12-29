@@ -1,40 +1,39 @@
-#
-# Run repoman via travis
-# See https://github.com/mrueg/repoman-travis
-#
+# inspired by https://github.com/mrueg/repoman-travis
+# inspired by https://github.com/rindeal/rindeal-ebuild-repo
+
+dist: bionic
+
 language: python
 
 python:
-    - pypy
+  - pypy3
+
+git:
+  depth: 1
+  quiet: true
 
 env:
-    - PORTAGE_VER="2.3.82"
-before_install:
-    - sudo apt-get -qq update
-    - pip install lxml pyyaml
+  global:
+    - secure: as/AwjrTltq8gubJrcuZM8brtg2Dy/qVaNFETvenjIfHVGEwdGbvTvbdrvtD1qBr3adHI4Qd2TcBOfanTE6EW2gGq6wsLlUSCT8H69kpU4aG1vgX8D8h2zJr0ZaG8dYZOLm2isaLy7FzbdsfzgqrYshQLECdgcJod7wM43xLGqlO1sQxi0FehHVaFSCu1FW7TFAnpDM3rlk9G8kU23B1rYD+1/p0KnmQ/qIyXeCDQfHlRfPeA6Ly57ABeJWHMECeL/Jcxhj9eOEWyXObW9XgWqBIpzxFKVSWy+mJD4KoAB3MyD2mBosCYn65j6Q+NWZZoNl/HKnheekGNzXl/gAIeLaYhEzfF87K1E8JZb645XGNsl7jf55zyDlX0r4NM1fyCxRdZ02oM2t74upqqNHMdQNHoEM7UTJk7kYx+M6UWYX6RFcb9ICjRAYX8jg4ptjfiFOTH9XBTcKWopkBf9tBhIaP4e63qY+Nsx6vyZkEen09rxViT+rgZ3X97AtFPslhsJm+8Bto9w9fsToL4Zpm691GdQPe5rjtBD+feSxSIBvRKJZEoRsL84UZKeE9Nd+8PIbAuN9IDJsFDvRcZLFvZBtiAzh2NPGofIXOBYC7RvKwsFH5mFMBXNAJCNwKvDP0giOt4qtvFLnrBRDa1siXDAmTSe1WqWxh+XM8IhH0q8w=
+    - PORTAGE_ROOT="$(mktemp --directory)"
+    - PORTAGE_VERSION="$(.travis-scripts/get_latest_portage_version)"
+    - PORTAGE_CONFIGROOT="${PORTAGE_ROOT}"
+    - PATH="${PORTAGE_ROOT}/usr/bin:${PATH}"
+
+install:
+  - .travis-scripts/install_portage
+  - .travis-scripts/setup_portage
+  - .travis-scripts/add_required_user_and_group
 
 before_script:
-    - sudo chmod a+rwX /etc/passwd /etc/group /etc /var /var/cache
-    - mkdir -p travis-overlay /etc/portage /var/cache/distfiles /var/db/repos/gentoo
-    - mv !(travis-overlay) travis-overlay/
-    - mv .git travis-overlay/
-    - wget "https://raw.githubusercontent.com/mrueg/repoman-travis/master/.travis.yml" -O .travis.yml.upstream
-    - wget "https://raw.githubusercontent.com/mrueg/repoman-travis/master/spinner.sh"
-    - wget -qO - "https://github.com/gentoo/portage/archive/portage-${PORTAGE_VER}.tar.gz" | tar xz
-    - wget -qO - "https://github.com/gentoo-mirror/gentoo/archive/master.tar.gz" | tar xz -C /var/db/repos/gentoo --strip-components=1
-    - chmod a+rwx spinner.sh
-    - echo "portage:x:250:250:portage:/var/tmp/portage:/bin/false" >> /etc/passwd
-    - echo "portage::250:portage,travis" >> /etc/group
-    - wget "https://www.gentoo.org/dtd/metadata.dtd" -O /var/cache/distfiles/metadata.dtd
-    - ln -s $TRAVIS_BUILD_DIR/portage-portage-${PORTAGE_VER}/cnf/repos.conf /etc/portage/repos.conf
-    - ln -s /var/db/repos/gentoo/profiles/default/linux/amd64/17.0 /etc/portage/make.profile
-    - SIZE=$(stat -c %s .travis.yml.upstream)
-    - if ! cmp -n $SIZE -s .travis.yml .travis.yml.upstream; then echo -e "\e[31m !!! .travis.yml outdated! Update available https://github.com/mrueg/repoman-travis \e[0m" > /tmp/update ; fi
-    - cd travis-overlay
+  - pip install PyYAML
 
 script:
-    - ./../spinner.sh "python ../portage-portage-${PORTAGE_VER}/repoman/bin/repoman full -d"
-# You can append own scripts after this line
+  - repoman full --include-dev
 
 after_success:
-  - bash <(curl -s https://copilot.blackducksoftware.com/ci/travis/scripts/upload)
+  - bash <(curl --silent https://copilot.blackducksoftware.com/ci/travis/scripts/upload)
+
+notifications:
+  email:
+    on_failure: change
