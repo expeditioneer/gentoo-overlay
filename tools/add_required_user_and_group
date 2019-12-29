@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -ex
+set -e
 
 PORTAGE_UID=250
 PORTAGE_GID=250
