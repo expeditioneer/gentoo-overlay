@@ -18,7 +18,7 @@ env:
     - PORTAGE_ROOT="$(mktemp --directory)"
     - PORTAGE_VERSION="$(tools/get_latest_portage_version)"
     - PORTAGE_CONFIGROOT="${PORTAGE_ROOT}"
-    - ROOT="${PORTAGE_ROOT}"
+    #- ROOT="${PORTAGE_ROOT}"
     - PATH="${PORTAGE_ROOT}/usr/bin:${PATH}"
 
 install:
