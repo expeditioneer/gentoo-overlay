@@ -23,7 +23,7 @@ install:
   - tools/setup_portage
   - tools/add_required_user_and_group
   - export PATH="${PORTAGE_ROOT}/usr/bin:${PATH}"
-#  - export PORTAGE_CONFIGROOT="${PORTAGE_ROOT}" ROOT="${PORTAGE_ROOT}"
+  - export PORTAGE_CONFIGROOT="${PORTAGE_ROOT}" ROOT="${PORTAGE_ROOT}"
 
 before_script:
   - pip install PyYAML

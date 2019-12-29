@@ -24,11 +24,15 @@ location = ${gentoo_tree_dir}
 location = ${TRAVIS_BUILD_DIR}
 _EOF_
 
+cat "${portage_conf_dir}/repos.conf/repos"
+
 cat >"${portage_conf_dir}/make.conf" <<_EOF_
 PORTAGE_TMPDIR="$(mktemp --directory)"
 PKGDIR="$(mktemp --directory)"
 DISTDIR="$(mktemp --directory)"
 RPMDIR="$(mktemp --directory)"
 _EOF_
+
+cat "${portage_conf_dir}/make.conf",
 
 ln --symbolic "${gentoo_tree_dir}/profiles/default/linux/${TRAVIS_CPU_ARCH}/17.1" "${portage_conf_dir}/make.profile"
