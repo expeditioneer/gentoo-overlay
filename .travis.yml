@@ -10,6 +10,7 @@ python:
 
 git:
   depth: 1
+  quiet: true
 
 env:
   global:
