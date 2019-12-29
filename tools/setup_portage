@@ -13,18 +13,18 @@ curl --location --silent "https://github.com/gentoo-mirror/gentoo/archive/master
 
 portage_conf_dir="${PORTAGE_ROOT}/etc/portage"
 mkdir --parents "${portage_conf_dir}/repos.conf"
-cat > "${portage_conf_dir}/repos.conf/repos" << _EOF_
+cat >"${portage_conf_dir}/repos.conf/repos" <<_EOF_
 [DEFAULT]
 main-repo = gentoo
 
 [gentoo]
 location = ${gentoo_tree_dir}
 
-[$(< "${TRAVIS_BUILD_DIR}/profiles/repo_name")]
+[$(<"${TRAVIS_BUILD_DIR}/profiles/repo_name")]
 location = ${TRAVIS_BUILD_DIR}
 _EOF_
 
-cat > "${portage_conf_dir}/make.conf" << _EOF_
+cat >"${portage_conf_dir}/make.conf" <<_EOF_
 PORTAGE_TMPDIR="$(mktemp --directory)"
 PKGDIR="$(mktemp --directory)"
 DISTDIR="$(mktemp --directory)"
