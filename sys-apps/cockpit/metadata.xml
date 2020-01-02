@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+    <maintainer type="person">
+        <email>expeditioneer@gentoo.org</email>
+        <name>Dennis Lamm</name>
+    </maintainer>
+    <longdescription>
+        Cockpit is an interactive server admin interface. It is easy to use and very lightweight. Cockpit interacts directly with the operating system from a real Linux session in a browser.
+    </longdescription>
+    <use>
+        <flag name="maintainer-mode">Enables maintainer mode</flag>
+        <flag name="pcp">Enables Performance Co-Pilot monitoring and management</flag>
+        <flag name="ssh">Enable SSH transport support</flag>
+    </use>
+</pkgmetadata>
