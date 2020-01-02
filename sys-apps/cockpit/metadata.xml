@@ -5,7 +5,7 @@
         <email>expeditioneer@gentoo.org</email>
         <name>Dennis Lamm</name>
     </maintainer>
-    <longdescription lang="en">
+    <longdescription>
         Cockpit is an interactive server admin interface. It is easy to use and very lightweight. Cockpit interacts
         directly with the operating system from a real Linux session in a browser.
     </longdescription>
