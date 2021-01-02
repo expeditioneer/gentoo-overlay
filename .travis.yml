@@ -1,6 +1,3 @@
-# inspired by https://github.com/mrueg/repoman-travis
-# inspired by https://github.com/rindeal/rindeal-ebuild-repo
-
 dist: bionic
 
 language: python
@@ -30,9 +27,6 @@ before_script:
 
 script:
   - repoman full --include-dev
-
-after_success:
-  - bash <(curl --silent https://copilot.blackducksoftware.com/ci/travis/scripts/upload)
 
 notifications:
   email:
