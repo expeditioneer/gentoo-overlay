@@ -1,19 +1,19 @@
-# Copyright 1999-2019 Gentoo Authors
+# Copyright 2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="7"
+EAPI=7
 
-: ${CMAKE_MAKEFILE_GENERATOR:=ninja}
-inherit cmake-utils
+inherit cmake
 
-DESCRIPTION="Video metadata scraper"
+DESCRIPTION="Media Manager for Kodi"
 SRC_URI="https://github.com/Komet/MediaElch/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 HOMEPAGE="http://www.mediaelch.de/"
 KEYWORDS="~amd64"
 
 LICENSE="GPL-3"
 SLOT="0"
-IUSE="lto"
+IUSE="lto test"
+RESTRICT="!test? ( test )"
 
 DEPEND="
 	dev-libs/quazip
@@ -31,19 +31,32 @@ DEPEND="
 
 S="${WORKDIR}/MediaElch-${PV}"
 
+src_prepare() {
+	if ! use test ; then
+		sed -i \
+			-e '/enable_testing()/d' \
+			-e '/add_subdirectory(test)/d' \
+			CMakeLists.txt || die
+	fi
+
+	cmake_src_prepare
+}
+
 src_configure()
 {
+	local CMAKE_BUILD_TYPE="Release"
+
 	local mycmakeargs=(
 		-DUSE_EXTERN_QUAZIP=0N
 		-DDISABLE_UPDATER=ON
-		-DENABLE_LTO="$(usex lto)"
+		-DENABLE_LTO=$(usex lto)
 	)
 
-	cmake-utils_src_configure
+	cmake_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+	cmake_src_install
 
 	dolib.so "${WORKDIR}/${P}_build/src/liblibmediaelch.so"
 }
