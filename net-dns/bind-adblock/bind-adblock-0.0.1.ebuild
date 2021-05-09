@@ -46,5 +46,7 @@ src_install() {
 	insinto /usr/lib/bind-adblock/
 	doins blocklist.zone.j2
 
+	systemd_dounit "${S}/update-blacklist-zonefile.service"
+	systemd_dounit "${S}/update-blacklist-zonefile.timer"
 	newtmpfiles "${FILESDIR}"/${PN}-tmpfiles.d ${PN}.conf
 }
