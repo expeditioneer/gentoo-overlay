@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit tmpfiles
+inherit systemd tmpfiles
 
 DESCRIPTION="BIND DNS RPZ ad-blocker"
 HOMEPAGE="https://github.com/expeditioneer/bind-adblock/"
