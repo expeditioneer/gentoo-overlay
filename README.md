@@ -10,7 +10,7 @@ Create a new config file under `/etc/portage/repos.conf/expeditioneer.conf` with
 ```
 [expeditioneer]
 auto-sync = yes
-location = /usr/local/portage/overlays/expeditioneer
+location = /var/db/repos/expeditioneer
 sync-type = git
 sync-uri = https://github.com/expeditioneer/gentoo-overlay.git
 ```
