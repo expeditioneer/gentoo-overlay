@@ -1,0 +1,11 @@
+[Unit]
+Description=pixelserv-tls bogus file server
+
+[Service]
+Type=simple
+#User=root
+#Group=named
+ExecStart=/usr/bin/pixelserv-tls -p 80 -k 443 -A 8080 -l 1 -z /var/lib/pixelserv -T 1200
+
+[Install]
+WantedBy=multi-user.target

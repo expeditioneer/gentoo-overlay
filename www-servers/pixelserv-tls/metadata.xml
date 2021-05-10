@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+    <maintainer type="person">
+        <email>expeditioneer@gentoo.org</email>
+        <name>Dennis Lamm</name>
+    </maintainer>
+    <longdescription>
+        A tiny bespoke HTTP/1.1 webserver with HTTPS and SNI support. It acts on behalf of hundreds of thousands of
+        advert/tracker servers and responds to all requests with nothing to speed up web browsing.
+    </longdescription>
+</pkgmetadata>
