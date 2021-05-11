@@ -1,11 +1,10 @@
 [Unit]
-Description=pixelserv-tls bogus file server
+Description=A tiny bespoke webserver for adblock with HTTP/1.1 and HTTPS support
+After=network.target
 
 [Service]
-Type=simple
-#User=root
-#Group=named
-ExecStart=/usr/bin/pixelserv-tls -p 80 -k 443 -A 8080 -l 1 -z /var/lib/pixelserv -T 1200
+ExecStart=/usr/bin/pixelserv-tls -f -z /var/lib/pixelserv
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
