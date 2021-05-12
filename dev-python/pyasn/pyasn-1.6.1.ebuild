@@ -22,6 +22,6 @@ IUSE=""
 
 RDEPEND="virtual/python-ipaddress[${PYTHON_USEDEP}]"
 DEPEND="${RDEPEND}
-		dev-python/setuptools[${PYTHON_USEDEP}]"
+    dev-python/setuptools[${PYTHON_USEDEP}]"
 
 S=${WORKDIR}/${MY_P}
