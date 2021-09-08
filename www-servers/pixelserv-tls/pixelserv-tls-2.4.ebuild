@@ -7,26 +7,37 @@ inherit autotools systemd
 
 DESCRIPTION="Serve one transparent pixel for ad blocking"
 HOMEPAGE="https://github.com/kvic-z/pixelserv-tls/wiki"
-SRC_URI="https://github.com/kvic-z/pixelserv-tls/archive/refs/tags/v${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/kvic-z/pixelserv-tls/archive/refs/tags/${PV}.tar.gz -> ${P}.tar.gz"
 
 SLOT="0"
 LICENSE="LGPL-3"
-KEYWORDS="~amd64 ~arm"
+KEYWORDS="~amd64 ~arm ~arm64"
 
-IUSE=""
+IUSE="static"
 
-DEPEND="dev-libs/openssl"
-RDEPEND="${DEPEND}"
+DEPEND="dev-libs/openssl:0="
+RDEPEND="${DEPEND}
+	acct-group/nobody"
 
 src_prepare() {
 	default
 	eautoreconf
 }
 
+src_configure() {
+	local myeconfargs=(
+		$(use_enable static)
+	)
+	econf "${myeconfargs[@]}"
+}
+
 src_install() {
 	default
 
-    systemd_dounit "${FILESDIR}"/${PN}.service
+	diropts -m 0770 -o nobody -g root
+	dodir /var/lib/pixelserv
+
+	systemd_dounit "${FILESDIR}"/${PN}.service
 
 	dodoc ChangeLog || die
 	doman ${PN}.1 || die
