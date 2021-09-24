@@ -5,5 +5,5 @@ EAPI=7
 
 inherit acct-group
 
-DESCRIPTION="Group for www-servers/uwsgi"
+DESCRIPTION="Group for uWSGI server"
 ACCT_GROUP_ID=-1
