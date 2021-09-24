@@ -5,5 +5,5 @@ EAPI=7
 
 inherit acct-group
 
-DESCRIPTION="Group for pgAdmin 4"
+DESCRIPTION="Group for pgAdmin Server Deployment"
 ACCT_GROUP_ID=-1

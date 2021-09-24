@@ -5,9 +5,8 @@ EAPI=7
 
 inherit acct-user
 
-DESCRIPTION="User for pgAdmin 4"
+DESCRIPTION="User for pgAdmin Server Deployment"
 ACCT_USER_ID=-1
 ACCT_USER_GROUPS=( "${PN}" )
-ACCT_USER_HOME=/var/lib/pcp
 
 acct-user_add_deps
