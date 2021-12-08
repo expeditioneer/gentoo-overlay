@@ -1,0 +1,31 @@
+--- a/tests/allheaders.cpp
++++ b/tests/allheaders.cpp
+@@ -265,7 +265,7 @@
+ #endif // 7.1
+     GCC_TURN_ON(return-type)
+     GCC_TURN_ON(sequence-point)
+-    GCC_TURN_ON(shadow)
++    GCC_TURN_OFF(shadow)
+ #if CHECK_GCC_VERSION(6,1)
+     GCC_TURN_ON(shift-negative-value)
+ #endif // 6.1
+@@ -348,7 +348,7 @@
+     GCC_TURN_ON(volatile-register-var)
+     GCC_TURN_ON(write-strings)
+ #if CHECK_GCC_VERSION(4,7)
+-    GCC_TURN_ON(zero-as-null-pointer-constant)
++    GCC_TURN_OFF(zero-as-null-pointer-constant)
+ #endif // 4.7
+     // }}}
+
+--- a/configure.in
++++ b/configure.in
+@@ -6401,7 +6401,7 @@
+                         dnl least with gcc (otherwise we'd always use size_t)
+                         CFLAGS_OLD="$CFLAGS"
+                         if test "$GCC" = yes ; then
+-                            CFLAGS="-Werror $CFLAGS"
++                            CFLAGS="$CFLAGS"
+                         fi
+
+                         AC_TRY_COMPILE(

@@ -1,0 +1,15 @@
+--- a/build/cmake/options.cmake
++++ b/build/cmake/options.cmake
+@@ -62,11 +62,7 @@
+
+ wx_option(wxBUILD_OPTIMISE "use speed-optimised C/C++ compiler flags for release build" OFF)
+ mark_as_advanced(wxBUILD_OPTIMISE)
+-if(MSVC)
+-    set(wxBUILD_STRIPPED_RELEASE_DEFAULT OFF)
+-else()
+-    set(wxBUILD_STRIPPED_RELEASE_DEFAULT ON)
+-endif()
++set(wxBUILD_STRIPPED_RELEASE_DEFAULT OFF)
+ wx_option(wxBUILD_STRIPPED_RELEASE "remove debug symbols in release build" ${wxBUILD_STRIPPED_RELEASE_DEFAULT})
+ mark_as_advanced(wxBUILD_STRIPPED_RELEASE)
+ wx_option(wxBUILD_PIC "Enable position independent code (PIC)." ON)
