@@ -1,0 +1,37 @@
+.navbar-pf {
+    border-color: #54487A !important;
+}
+
+body.login-pf {
+    background: url("bg-plain.jpg") no-repeat 50% 0;
+    background-size: cover;
+    background-color: #54487A;
+    font-family: Open Sans;
+}
+
+#badge {
+    width: 70px;
+    height: 70px;
+    background-image: url("logo.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#brand {
+    font-family: Zurich,RedHatText,Helvetica,Arial,sans-serif;
+    font-size: 18pt !important;
+    font-weight: bold;
+    text-transform: uppercase !important;
+}
+
+#brand:before {
+    content: "${NAME} Cockpit";
+}
+
+#index-brand:before {
+    content: "${NAME} Cockpit";
+}
+
+#index-brand {
+    font-weight: bold;
+}

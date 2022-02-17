@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+    <maintainer type="person">
+        <email>expeditioneer@gentoo.org</email>
+        <name>Dennis Lamm</name>
+    </maintainer>
+    <longdescription>
+        Performance Co-Pilot (PCP) provides a framework and services to support system-level performance monitoring and
+        management. It presents a unifying abstraction for all of the performance data in a system, and many tools for
+        interrogating, retrieving and processing that data.
+    </longdescription>
+    <upstream>
+        <remote-id type="github">performancecopilot/pcp</remote-id>
+    </upstream>
+    <use>
+        <flag name="3d">Enable support for 3D scene graph API</flag>
+        <flag name="discovery">Enable support for service discovery</flag>
+        <flag name="dstat-symlink">Enable support for /usr/bin/dstat symlink</flag>
+        <flag name="infiniband">Enable support for Infiniband metrics</flag>
+        <flag name="manager">Enable daemon manager</flag>
+        <flag name="pie">Build position-independent-executable</flag>
+        <flag name="perfevent">Enable perfevent pmda</flag>
+        <flag name="pmdabcc">Enable BCC pmda</flag>
+        <flag name="pmdabpftrace">Enable bpftrace pmda</flag>
+        <flag name="pmdajson">Enable JSON pmda</flag>
+        <flag name="pmdanutcracker">Enable nutcracker pmda</flag>
+        <flag name="pmdapodman">Enable podman pmda</flag>
+        <flag name="pmdastatsd">Enable statds pmda</flag>
+        <flag name="pmdasnmp">Enable SNMP pmda</flag>
+        <flag name="selinux">Enable building of selinux package</flag>
+        <flag name="ssp">Enable gcc stack-protector</flag>
+        <flag name="static-probes">Enable support for static probes</flag>
+        <flag name="systemd">Support for systemd services</flag>
+        <flag name="transparent-decompression">Enable support for transparent decompression of archives</flag>
+        <flag name="webapi">Enable REST API daemon</flag>
+    </use>
+</pkgmetadata>

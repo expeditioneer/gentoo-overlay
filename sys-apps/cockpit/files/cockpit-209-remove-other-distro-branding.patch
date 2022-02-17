@@ -1,0 +1,18 @@
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -441,15 +441,7 @@
+ include po/Makefile.am
+ include pkg/Makefile.am
+ include src/base1/Makefile.am
+-include src/branding/centos/Makefile.am
+-include src/branding/debian/Makefile.am
+ include src/branding/default/Makefile.am
+-include src/branding/fedora/Makefile.am
+-include src/branding/kubernetes/Makefile.am
+-include src/branding/registry/Makefile.am
+-include src/branding/rhel/Makefile.am
+-include src/branding/scientific/Makefile.am
+-include src/branding/ubuntu/Makefile.am
+ include src/bridge/Makefile.am
+ include src/common/Makefile-common.am
+ include src/websocket/Makefile-websocket.am
