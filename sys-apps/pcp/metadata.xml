@@ -15,13 +15,12 @@
     </upstream>
     <use>
         <flag name="3d">Enable support for 3D scene graph API</flag>
-        <flag name="discovery">Enable support for service discovery</flag>
         <flag name="dstat-symlink">Enable support for /usr/bin/dstat symlink</flag>
         <flag name="infiniband">Enable support for Infiniband metrics</flag>
         <flag name="manager">Enable daemon manager</flag>
-        <flag name="pie">Build position-independent-executable</flag>
         <flag name="perfevent">Enable perfevent pmda</flag>
         <flag name="pmdabcc">Enable BCC pmda</flag>
+        <flag name="pmdabpf">Enable BPF pmda</flag>
         <flag name="pmdabpftrace">Enable bpftrace pmda</flag>
         <flag name="pmdajson">Enable JSON pmda</flag>
         <flag name="pmdanutcracker">Enable nutcracker pmda</flag>
@@ -33,6 +32,11 @@
         <flag name="static-probes">Enable support for static probes</flag>
         <flag name="systemd">Support for systemd services</flag>
         <flag name="transparent-decompression">Enable support for transparent decompression of archives</flag>
-        <flag name="webapi">Enable REST API daemon</flag>
     </use>
+    <upstream>
+        <doc>https://pcp.readthedocs.io</doc>
+        <bugs-to>https://github.com/performancecopilot/pcp/issues</bugs-to>
+        <remote-id type="cpe">cpe:/a:opensuse:pcp</remote-id>
+        <remote-id type="github">performancecopilot/pcp</remote-id>
+    </upstream>
 </pkgmetadata>

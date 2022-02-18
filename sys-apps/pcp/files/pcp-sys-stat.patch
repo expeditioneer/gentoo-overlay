@@ -1,0 +1,20 @@
+--- a/src/libpcp/src/tz.c
++++ b/src/libpcp/src/tz.c
+@@ -29,6 +29,7 @@
+ #include "libpcp.h"
+ #include "sha256.h"
+ #include "internal.h"
++#include <sys/stat.h>
+
+ static char	*envtz;			/* buffer in env */
+ static int	envtzlen;
+--- a/src/pmview/main.cpp
++++ b/src/pmview/main.cpp
+@@ -18,6 +18,7 @@
+ #include <Inventor/nodes/SoBaseColor.h>
+ #include <Inventor/nodes/SoSeparator.h>
+ #include <Inventor/nodes/SoTranslation.h>
++#include <sys/stat.h>
+ #include "qed_fileiconprovider.h"
+ #include "qed_timecontrol.h"
+ #include "qed_console.h"
