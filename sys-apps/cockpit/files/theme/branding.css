@@ -10,28 +10,19 @@ body.login-pf {
 }
 
 #badge {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     background-image: url("logo.svg");
     background-size: contain;
     background-repeat: no-repeat;
 }
-
 #brand {
-    font-family: Zurich,RedHatText,Helvetica,Arial,sans-serif;
-    font-size: 18pt !important;
+    content: "${NAME} <b>${VARIANT}</b>";
+    font-size: 18pt;
     font-weight: bold;
-    text-transform: uppercase !important;
-}
-
-#brand:before {
-    content: "${NAME} Cockpit";
-}
-
-#index-brand:before {
-    content: "${NAME} Cockpit";
+    text-transform: uppercase;
 }
 
 #index-brand {
-    font-weight: bold;
+    content: "${NAME} <b>${ID}</b>";
 }

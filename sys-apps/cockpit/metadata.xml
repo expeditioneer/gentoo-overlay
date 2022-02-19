@@ -14,7 +14,7 @@
         <remote-id type="github">cockpit-project/cockpit</remote-id>
     </upstream>
     <use>
-        <flag name="maintainer-mode">Enables maintainer mode</flag>
+        <flag name="kdump">Enable capturing of kernel crash dumps</flag>
         <flag name="pcp">Enables Performance Co-Pilot monitoring and management</flag>
         <flag name="ssh">Enable SSH transport support</flag>
     </use>
