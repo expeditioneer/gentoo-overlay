@@ -1,9 +1,9 @@
 # Copyright 1999-2020 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-inherit user pam autotools eutils systemd
+inherit autotools pam systemd
 
 DESCRIPTION="A sysadmin login session in a web browser"
 HOMEPAGE="http://cockpit-project.org/"
@@ -17,25 +17,21 @@ LICENSE="
 
 SLOT="0"
 
-IUSE="branding doc maintainer-mode +pcp +ssh systemd debug test"
+IUSE="branding doc maintainer-mode +pcp policykit +ssh systemd debug test"
 
-KEYWORDS="~amd64"
+KEYWORDS="~arm ~arm64 ~amd64"
 RESTRICT="!test? ( test )"
 
 REQUIRED_USE="systemd"
 
-PATCHES=(
-	"${FILESDIR}"/cockpit-209-remove-other-distro-branding.patch
-	"${FILESDIR}"/cockpit-209-firewalld.patch)
-
 DEPEND="
-	ssh? ( >=net-libs/libssh-0.8.5[server] )
-	pcp? ( sys-apps/pcp )
 	>=app-crypt/mit-krb5-1.11
 	>=dev-libs/json-glib-1.0
 	>=net-libs/gnutls-3.4.3
+	pcp? ( sys-apps/pcp )
+	policykit? ( sys-auth/polkit )
+	ssh? ( >=net-libs/libssh-0.8.5[server] )
 	systemd? ( >=sys-apps/systemd-235 )
-	>=sys-auth/polkit-0.105
 "
 
 RDEPEND="${DEPEND}
@@ -45,6 +41,22 @@ RDEPEND="${DEPEND}
 	acct-user/cockpit-wsinstance
 "
 
+# TODO: dependencies
+#GLIB_VERSION="2.50"
+#LIBSSH_VERSION="0.8.5"
+#
+#GIO_REQUIREMENT="gio-unix-2.0 >= $GLIB_VERSION gio-2.0 >= $GLIB_VERSION"
+#LIBSYSTEMD_REQUIREMENT="libsystemd >= 235"
+#JSON_GLIB_REQUIREMENT="json-glib-1.0 >= 1.4"
+#POLKIT_REQUIREMENT="polkit-agent-1 >= 0.105"
+#GNUTLS_REQUIREMENT="gnutls >= 3.6.0"
+#KRB5_REQUIREMENT="krb5-gssapi >= 1.11 krb5 >= 1.11"
+
+
+PATCHES=(
+	"${FILESDIR}"/cockpit-263-remove-other-distro-branding.patch
+)
+
 src_prepare() {
 	default
 	eautoreconf
@@ -53,16 +65,17 @@ src_prepare() {
 src_configure() {
 
 	local myconf=(
+		--localstatedir="${EPREFIX}"/var
+		--with-systemdunitdir="$(systemd_get_systemunitdir)"
+		--with-pamdir="$(getpam_mod_dir)"
 		--with-cockpit-user=cockpit-ws
 		--with-cockpit-group=cockpit-ws
 		--with-cockpit-ws-instance-user=cockpit-wsinstance
 		--with-cockpit-ws-instance-group=cockpit-wsinstance
-		--localstatedir="${EPREFIX}"/var
-		--with-systemdunitdir="$(systemd_get_systemunitdir)"
-		--with-pamdir="$(getpam_mod_dir)"
 		$(use_enable debug)
 		$(use_enable doc)
 		$(use_enable pcp)
+    $(use_enable policykit polkit)
 		$(use_enable maintainer-mode)
 		$(use_enable ssh))
 
@@ -71,7 +84,7 @@ src_configure() {
 src_install(){
 	emake DESTDIR="${D}"  install || die
 
-	ewarn "Installing experimetal pam configuration file"
+	ewarn "Installing experimental pam configuration file"
 	ewarn "use at your own risk"
 	newpamd "${FILESDIR}"/cockpit.pam cockpit
 
