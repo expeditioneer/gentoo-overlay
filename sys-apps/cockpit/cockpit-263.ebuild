@@ -88,6 +88,21 @@ PATCHES=(
 src_prepare() {
 	default
 	eautoreconf
+
+	if ! use kdump; then
+	  sed -i -e "s#pkg/kdump/org.cockpit-project.cockpit-kdump.metainfo.xml ##" "${S}"/pkg/Makefile.am || die
+		rm -r "${S}"/pkg/kdump
+	fi
+
+  if ! use selinux; then
+    sed -i -e "s#pkg/selinux/org.cockpit-project.cockpit-selinux.metainfo.xml##" "${S}"/pkg/Makefile.am || die
+		rm -r "${S}"/pkg/selinux
+	fi
+
+  rm -r "${S}"/pkg/sosreport
+  rm -r "${S}"/pkg/playground
+
+  sed -i -e "s#pkg/sosreport/org.cockpit-project.cockpit-sosreport.metainfo.xml##" "${S}"/pkg/Makefile.am || die
 }
 
 src_configure() {
@@ -121,14 +136,6 @@ src_install(){
 	if use branding; then
 		dodir /usr/share/cockpit/branding/gentoo/
 		cp --recursive "${FILESDIR}"/theme/. "${D}"/usr/share/cockpit/branding/gentoo/
-	fi
-
-	if ! use selinux; then
-		rm -r "${D}"/usr/share/cockpit/selinux
-	fi
-
-	if ! use kdump; then
-		rm -r "${D}"/usr/share/cockpit/kdump
 	fi
 
 	dodoc README.md AUTHORS
