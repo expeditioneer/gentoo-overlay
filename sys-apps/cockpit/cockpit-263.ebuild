@@ -17,12 +17,11 @@ LICENSE="
 
 SLOT="0"
 
-IUSE="branding doc debug kdump +pcp policykit selinux +ssh systemd test"
-
-KEYWORDS="~arm ~arm64 ~amd64"
-RESTRICT="!test? ( test )"
-
+IUSE="branding debug doc kdump networkmanager +pcp policykit selinux +ssh systemd test udisks"
 REQUIRED_USE="systemd"
+
+KEYWORDS="~amd64 ~arm ~arm64"
+RESTRICT="!test? ( test )"
 
 DEPEND="
 	>=app-crypt/mit-krb5-1.11
@@ -32,8 +31,10 @@ DEPEND="
 	>=sys-libs/glibc-2.5
 	virtual/libcrypt:=
 	kdump? ( sys-apps/kexec-tools )
+	networkmanager? ( net-misc/networkmanager:= )
 	pcp? ( sys-apps/pcp )
 	policykit? ( sys-auth/polkit )
+	udisks? ( sys-fs/udisks )
 	ssh? ( >=net-libs/libssh-0.8.5[server] )
 	systemd? ( >=sys-apps/systemd-235 )
 "
@@ -45,41 +46,9 @@ RDEPEND="${DEPEND}
 	acct-user/cockpit-wsinstance
 "
 
-# Missing dependencies
+# missing from Portage:
 # PackageKit
-# https://github.com/sgallagher/sscg
-
-#>>> /usr/share/cockpit/static/fonts/RedHatText-Regular.woff2
-#>>> /usr/share/cockpit/static/fonts/RedHatText-MediumItalic.woff2
-#>>> /usr/share/cockpit/static/fonts/RedHatText-Medium.woff2
-#>>> /usr/share/cockpit/static/fonts/RedHatText-Italic.woff2
-#>>> /usr/share/cockpit/static/fonts/RedHatText-BoldItalic.woff2
-#>>> /usr/share/cockpit/static/fonts/RedHatText-Bold.woff2
-#>>> /usr/share/cockpit/static/fonts/RedHatDisplay-Regular.woff2
-#>>> /usr/share/cockpit/static/fonts/RedHatDisplay-MediumItalic.woff2
-#>>> /usr/share/cockpit/static/fonts/RedHatDisplay-Medium.woff2
-#>>> /usr/share/cockpit/static/fonts/RedHatDisplay-Italic.woff2
-#>>> /usr/share/cockpit/static/fonts/RedHatDisplay-BoldItalic.woff2
-#>>> /usr/share/cockpit/static/fonts/RedHatDisplay-Bold.woff2
-#>>> /usr/share/cockpit/static/fonts/RedHatDisplay-BlackItalic.woff2
-#>>> /usr/share/cockpit/static/fonts/RedHatDisplay-Black.woff2
-
-#rm -r %{buildroot}/%{_prefix}/%{__lib}/cockpit-test-assets
-## files from -pcp
-#rm -r %{buildroot}/%{_libexecdir}/cockpit-pcp %{buildroot}/%{_localstatedir}/lib/pcp/
-## files from -storaged
-#rm -f %{buildroot}/%{_prefix}/share/metainfo/org.cockpit-project.cockpit-storaged.metainfo.xml
-
-#>>> /lib/systemd/system/cockpit-wsinstance-https@.socket
-#>>> /lib/systemd/system/cockpit-wsinstance-https@.service
-#>>> /lib/systemd/system/cockpit-wsinstance-https-factory.socket
-#>>> /lib/systemd/system/cockpit-wsinstance-https-factory@.service
-#>>> /lib/systemd/system/cockpit-wsinstance-http.socket
-#>>> /lib/systemd/system/cockpit-wsinstance-http.service
-#>>> /lib/systemd/system/cockpit.socket
-#>>> /lib/systemd/system/cockpit.service
-#>>> /lib/systemd/system/cockpit-motd.service
-#>>> /lib/systemd/system/system-cockpithttps.slice
+# SSCG - https://github.com/sgallagher/sscg
 
 PATCHES=(
 	"${FILESDIR}"/cockpit-263-remove-other-distro-branding.patch
@@ -90,19 +59,40 @@ src_prepare() {
 	eautoreconf
 
 	if ! use kdump; then
-	  sed -i -e "s#pkg/kdump/org.cockpit-project.cockpit-kdump.metainfo.xml ##" "${S}"/pkg/Makefile.am || die
+		sed -i -e "s#pkg/kdump/org.cockpit-project.cockpit-kdump.metainfo.xml##" "${S}"/pkg/Makefile.am || die
+		sed -i -e "s#kdump##" "${S}"/pkg/build || die
 		rm -r "${S}"/pkg/kdump
 	fi
 
-  if ! use selinux; then
-    sed -i -e "s#pkg/selinux/org.cockpit-project.cockpit-selinux.metainfo.xml##" "${S}"/pkg/Makefile.am || die
+	if ! use networkmanager; then
+		sed -i -e "s#networkmanager##" "${S}"/pkg/build || die
+		rm -r "${S}"/pkg/networkmanager
+	fi
+
+	if ! use selinux; then
+		sed -i -e "s#pkg/selinux/org.cockpit-project.cockpit-selinux.metainfo.xml##" "${S}"/pkg/Makefile.am || die
+		sed -i -e "s#selinux##" "${S}"/pkg/build || die
 		rm -r "${S}"/pkg/selinux
 	fi
 
-  rm -r "${S}"/pkg/sosreport
-  rm -r "${S}"/pkg/playground
+	if ! use udisks; then
+		sed -i -e "s#pkg/storaged/org.cockpit-project.cockpit-storaged.metainfo.xml##" "${S}"/pkg/Makefile.am || die
+		sed -i -e "s#storaged##" "${S}"/pkg/build || die
+		rm -r "${S}"/pkg/storaged
+	fi
 
-  sed -i -e "s#pkg/sosreport/org.cockpit-project.cockpit-sosreport.metainfo.xml##" "${S}"/pkg/Makefile.am || die
+	rm -r "${S}"/pkg/sosreport
+	rm -r "${S}"/pkg/packagekit
+	rm -r "${S}"/pkg/playground
+
+	sed -i \
+		-e "s#pkg/sosreport/org.cockpit-project.cockpit-sosreport.metainfo.xml##" \
+		-e "s#pkg/sosreport/cockpit-sosreport.png##" "${S}"/pkg/Makefile.am || die
+
+	sed -i \
+		-e "s#sosreport##" \
+		-e "s#packagekit##" \
+		-e "s#playground##" "${S}"/pkg/build || die
 }
 
 src_configure() {
