@@ -81,9 +81,9 @@ src_prepare() {
 		rm -r "${S}"/pkg/storaged
 	fi
 
-	rm -r "${S}"/pkg/sosreport
-	rm -r "${S}"/pkg/packagekit
-	rm -r "${S}"/pkg/playground
+  for package in sosreport packagekit playground; do
+	  rm -r "${S}"/pkg/${package}
+	done
 
 	sed -i \
 		-e "s#pkg/sosreport/org.cockpit-project.cockpit-sosreport.metainfo.xml##" \
@@ -107,6 +107,7 @@ src_configure() {
 		--with-cockpit-group=cockpit-ws
 		--with-cockpit-ws-instance-user=cockpit-wsinstance
 		--with-cockpit-ws-instance-group=cockpit-wsinstance
+   	--enable-asan=no
 		$(use_enable debug)
 		$(use_enable doc)
 		$(use_enable pcp)
