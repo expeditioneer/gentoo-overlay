@@ -216,7 +216,7 @@ src_prepare() {
 
   if use jemalloc; then
     sed -i \
-      -e "s Environment=LD_PRELOAD=@libdir@/@package_name@/lib/libjemalloc.so.2 ${EPREFIX}/usr/$(get_libdir)/libjemalloc.so.2 " \
+      -e "s Environment=LD_PRELOAD=@libdir@/@package_name@/lib/libjemalloc.so.2 Environment=LD_PRELOAD=${EPREFIX}/usr/$(get_libdir)/libjemalloc.so.2 " \
       wrappers/systemd.template.service.custom.conf.in || die
   else
     sed -i \
@@ -224,9 +224,7 @@ src_prepare() {
       wrappers/systemd.template.service.custom.conf.in || die
   fi
 
-  sed -i \
-      -e 's EnvironmentFile=-@initconfigdir@/@package_name@  ' \
-      -e 's EnvironmentFile=-@initconfigdir@/@package_name@-%i  ' \
+  sed -i -e 's EnvironmentFile=-@initconfigdir@/@package_name@.*  ' \
      wrappers/systemd.template.service.in || die
 
 	default
