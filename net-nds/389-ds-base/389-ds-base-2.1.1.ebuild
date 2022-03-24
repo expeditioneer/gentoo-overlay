@@ -126,6 +126,8 @@ LICENSE="GPL-3+ Apache-2.0 BSD MIT MPL-2.0"
 SLOT="$(ver_cut 1-2)/0"
 KEYWORDS="~amd64"
 IUSE_PLUGINS="+accountpolicy +bitwise +dna +pam-passthru"
+# TODO: check if bpkdf2 required on openldap? -> should be needed
+# TODO: check if sha2 required on openldap?
 IUSE="${IUSE_PLUGINS} +autobind auto-dn-suffix debug doc +jemalloc +ldapi selinux systemd"
 
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
