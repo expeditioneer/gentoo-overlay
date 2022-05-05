@@ -1,0 +1,11 @@
+--- a/selinux/Makefile.am	(revision 4d1d113e14902f82af9c68f3f739ffc4fad1b117)
++++ b/selinux/Makefile.am	(date 1651760946601)
+@@ -17,7 +17,7 @@
+ 	$(NULL)
+
+ cockpit.pp: $(SELINUX_POLICY_FILES)
+-	$(AM_V_GEN) make -sf /usr/share/selinux/devel/Makefile cockpit.pp
++	$(AM_V_GEN) $(MAKE) -sf /usr/share/selinux/devel/Makefile cockpit.pp
+
+ cockpit.pp.bz2: cockpit.pp
+ 	$(AM_V_GEN) bzip2 -9 < $< > $@.tmp && mv $@.tmp $@

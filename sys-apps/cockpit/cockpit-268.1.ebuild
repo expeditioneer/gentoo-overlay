@@ -20,7 +20,7 @@ SLOT="0"
 IUSE="branding debug doc kdump networkmanager +pcp policykit selinux +ssh systemd test udisks"
 REQUIRED_USE="systemd"
 
-KEYWORDS="~amd64 ~arm ~arm64"
+KEYWORDS="~amd64 ~arm64"
 RESTRICT="!test? ( test )"
 
 DEPEND="
@@ -46,12 +46,9 @@ RDEPEND="${DEPEND}
 	acct-user/cockpit-wsinstance
 "
 
-# missing from Portage:
-# PackageKit
-# SSCG - https://github.com/sgallagher/sscg
-
 PATCHES=(
 	"${FILESDIR}"/cockpit-263-remove-other-distro-branding.patch
+	"${FILESDIR}"/cockpit-268.1-fix-jobserver-unavailable.patch
 )
 
 src_prepare() {
@@ -81,8 +78,8 @@ src_prepare() {
 		rm -r "${S}"/pkg/storaged
 	fi
 
-  for package in sosreport packagekit playground; do
-	  rm -r "${S}"/pkg/${package}
+	for package in sosreport packagekit playground; do
+		rm -r "${S}"/pkg/${package}
 	done
 
 	sed -i \
@@ -107,7 +104,7 @@ src_configure() {
 		--with-cockpit-group=cockpit-ws
 		--with-cockpit-ws-instance-user=cockpit-wsinstance
 		--with-cockpit-ws-instance-group=cockpit-wsinstance
-   	--enable-asan=no
+		--enable-asan=no
 		$(use_enable debug)
 		$(use_enable doc)
 		$(use_enable pcp)
@@ -117,6 +114,7 @@ src_configure() {
 
 	econf "${myconf[@]}"
 }
+
 src_install(){
 	emake DESTDIR="${D}" install || die
 
@@ -131,8 +129,10 @@ src_install(){
 
 	dodoc README.md AUTHORS
 
-	systemd_reenable cockpit.socket
-
 	keepdir /etc/cockpit/ws-certs.d
 	chown -R cockpit-ws:cockpit-ws "${D}/etc/cockpit/ws-certs.d"
+}
+
+pkg_postinst() {
+	tmpfiles_process cockpit-tempfiles.conf
 }
