@@ -13,8 +13,7 @@ inherit bash-completion-r1 python-single-r1 systemd tmpfiles
 DESCRIPTION="Performance Co-Pilot, system performance and analysis framework"
 SRC_URI="https://github.com/performancecopilot/${PN}/archive/${PV}.tar.gz -> ${P}.tar.gz"
 HOMEPAGE="https://pcp.io"
-# Keywords for ~arm ~arm64 waiting for keyword on 'dev-libs/libvarlink' BUG #841353
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~arm ~arm64"
 
 LICENSE="LGPL-2.1+"
 SLOT="0"
@@ -29,10 +28,10 @@ DEPEND="
 	sys-process/procps
 	sys-apps/which
 	$(python_gen_cond_dep '
-	  dev-python/PyQt5[${PYTHON_USEDEP},svg]
-	  dev-python/openpyxl[${PYTHON_USEDEP}]
-	  dev-python/six[${PYTHON_USEDEP}]
-  ')
+		dev-python/PyQt5[${PYTHON_USEDEP},svg]
+		dev-python/openpyxl[${PYTHON_USEDEP}]
+		dev-python/six[${PYTHON_USEDEP}]
+	')
 	dev-util/ragel
 	net-libs/libmicrohttpd
 	pmdapodman? ( dev-libs/libvarlink )
@@ -55,9 +54,9 @@ DEPEND="
 		dev-qt/qtprintsupport:5
 	)
 	ssl? (
-	  dev-libs/cyrus-sasl
-	  dev-libs/nss
-   )
+		dev-libs/cyrus-sasl
+		dev-libs/nss
+	 )
 	zeroconf? ( net-dns/avahi[dbus] )
 "
 
@@ -66,51 +65,51 @@ RDEPEND="${DEPEND}
 	acct-user/pcp"
 
 PATCHES=(
-  "${FILESDIR}/${PN}-5.3.6-bash-completion.patch"
+	"${FILESDIR}/${PN}-5.3.6-bash-completion.patch"
 	"${FILESDIR}/${PN}-5.3.6-sys-stat.patch"
 )
 
 src_prepare() {
-    default
+		default
 
-    find ./ -type f -name "*.service.in" -exec sed \
-    -e "/^EnvironmentFile=.*/d" \
-    -i {} + || die "removal of EnvironmentFile from systemd services failed"
+		find ./ -type f -name "*.service.in" -exec sed \
+		-e "/^EnvironmentFile=.*/d" \
+		-i {} + || die "removal of EnvironmentFile from systemd services failed"
 
-  	find . -type f -exec sed \
+		find . -type f -exec sed \
 		-e "s/pcp-doc/${PF}/g" \
 		-i {} + || die "fixing documentation paths failed"
 
-    sed -i \
-      -e 's#ifeq (, $(filter debian suse, $(PACKAGE_DISTRIBUTION)))#ifeq (, $(filter debian gentoo suse, $(PACKAGE_DISTRIBUTION)))#g' \
-        GNUmakefile   || die "could not disable run directory creation"
+		sed -i \
+			-e 's#ifeq (, $(filter debian suse, $(PACKAGE_DISTRIBUTION)))#ifeq (, $(filter debian gentoo suse, $(PACKAGE_DISTRIBUTION)))#g' \
+				GNUmakefile   || die "could not disable run directory creation"
 
-    sed -i \
-      -e "s#^pcp_bashshare_dir=.*#pcp_bashshare_dir=$(get_bashcompdir)#g" \
-      configure.ac || die "could not set bashcompdir"
+		sed -i \
+			-e "s#^pcp_bashshare_dir=.*#pcp_bashshare_dir=$(get_bashcompdir)#g" \
+			configure.ac || die "could not set bashcompdir"
 
-    # TODO: fix installation of qa subdir stuff when tests are enabled
-    #! use test && sed -i -e "/SUBDIRS += qa/d" GNUmakefile
+		# TODO: fix installation of qa subdir stuff when tests are enabled
+		#! use test && sed -i -e "/SUBDIRS += qa/d" GNUmakefile
 
-    sed -i \
-      -e "s#^HAVE_GZIPPED_MANPAGES = .*#HAVE_GZIPPED_MANPAGES = false#g" \
-      -e "s#^HAVE_BZIP2ED_MANPAGES = .*#HAVE_BZIP2ED_MANPAGES = false#g" \
-      -e "s#^HAVE_LZMAED_MANPAGES = .*#HAVE_LZMAED_MANPAGES = false#g" \
-      -e "s#^HAVE_XZED_MANPAGES = .*#HAVE_XZED_MANPAGES = false#g" \
-      src/include/builddefs.in || die "could not disable automatic manpage compression"
+		sed -i \
+			-e "s#^HAVE_GZIPPED_MANPAGES = .*#HAVE_GZIPPED_MANPAGES = false#g" \
+			-e "s#^HAVE_BZIP2ED_MANPAGES = .*#HAVE_BZIP2ED_MANPAGES = false#g" \
+			-e "s#^HAVE_LZMAED_MANPAGES = .*#HAVE_LZMAED_MANPAGES = false#g" \
+			-e "s#^HAVE_XZED_MANPAGES = .*#HAVE_XZED_MANPAGES = false#g" \
+			src/include/builddefs.in || die "could not disable automatic manpage compression"
 
-    if ! use zabbix; then
-    	sed -i -e	"/pcp2zabbix/d" src/GNUmakefile || die "could not disable zabbix support"
+		if ! use zabbix; then
+			sed -i -e	"/pcp2zabbix/d" src/GNUmakefile || die "could not disable zabbix support"
 
-      sed -i \
-        -e "#pcp2zabbix)#,#;;#d" \
-        -e "s#pcp2zabbix ##g" \
-         src/bashrc/pcp_completion.sh || die "could not disable zabbix bash-completion"
-    fi
+			sed -i \
+				-e "#pcp2zabbix)#,#;;#d" \
+				-e "s#pcp2zabbix ##g" \
+				 src/bashrc/pcp_completion.sh || die "could not disable zabbix bash-completion"
+		fi
 }
 
 src_configure() {
-  local myconf=(
+	local myconf=(
 		--prefix="${EPREFIX}"/usr
 		--sbindir="${EPREFIX}"/usr/sbin
 		--libexecdir="${EPREFIX}"/usr/$(get_libdir)
@@ -157,32 +156,32 @@ src_compile(){
 }
 
 src_install() {
-  DIST_ROOT=${D} emake -j1 install
+	DIST_ROOT=${D} emake -j1 install
 	dodoc CHANGELOG README.md
 	newtmpfiles "${FILESDIR}"/${PN}.tmpfiles.conf ${PN}.conf
 	python_optimize
 
-  keepdir /var/lib/pcp/config/pmda
-  keepdir /var/lib/pcp/config/pmie
-  keepdir /var/lib/pcp/pmcd
-  keepdir /var/lib/pcp/tmp/bash
-  keepdir /var/lib/pcp/tmp/json
-  keepdir /var/lib/pcp/tmp/mmv
-  keepdir /var/lib/pcp/tmp/pmie
-  keepdir /var/lib/pcp/tmp/pmlogger
-  keepdir /var/lib/pcp/tmp/pmproxy
-  keepdir /var/log/pcp/pmcd
-  keepdir /var/log/pcp/pmfind
-  keepdir /var/log/pcp/pmie
-  keepdir /var/log/pcp/pmlogger
-  keepdir /var/log/pcp/pmproxy
-  keepdir /var/log/pcp/sa
+	keepdir /var/lib/pcp/config/pmda
+	keepdir /var/lib/pcp/config/pmie
+	keepdir /var/lib/pcp/pmcd
+	keepdir /var/lib/pcp/tmp/bash
+	keepdir /var/lib/pcp/tmp/json
+	keepdir /var/lib/pcp/tmp/mmv
+	keepdir /var/lib/pcp/tmp/pmie
+	keepdir /var/lib/pcp/tmp/pmlogger
+	keepdir /var/lib/pcp/tmp/pmproxy
+	keepdir /var/log/pcp/pmcd
+	keepdir /var/log/pcp/pmfind
+	keepdir /var/log/pcp/pmie
+	keepdir /var/log/pcp/pmlogger
+	keepdir /var/log/pcp/pmproxy
+	keepdir /var/log/pcp/sa
 }
 
 pkg_postinst() {
 	cd "${EROOT}"/var/lib/pcp/pmns && ./Rebuild || die 'rebuild failed'
 
-  tmpfiles_process ${PN}.conf
+	tmpfiles_process ${PN}.conf
 
 	if use systemd; then
 		systemd_reenable pmcd.service
