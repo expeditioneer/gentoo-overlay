@@ -29,14 +29,14 @@ esac
 if [[ -z ${_WXWIDGETS_ECLASS} ]]; then
 _WXWIDGETS_ECLASS=1
 
-# @ECLASS-VARIABLE: WX_GTK_VER
+# @ECLASS_VARIABLE: WX_GTK_VER
 # @PRE_INHERIT
 # @REQUIRED
 # @DESCRIPTION:
 # The SLOT of the x11-libs/wxGTK you're targeting.  Needs to be defined before
 # inheriting the eclass.  Can be either "3.0-gtk3" or "3.1".
 case ${WX_GTK_VER} in
-	3.0-gtk3 | 3.1) ;;
+	3.0-gtk3 | 3.2) ;;
 	"") die "WX_GTK_VER not declared" ;;
 	*)  die "Invalid WX_GTK_VER: must be set to a valid wxGTK SLOT ('3.0' or '3.1')" ;;
 esac
