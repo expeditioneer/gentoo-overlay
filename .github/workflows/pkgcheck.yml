@@ -1,0 +1,15 @@
+---
+
+name: pkgcheck
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@main
+
+    - name: Run pkgcheck
+      uses: pkgcore/pkgcheck-action@v1
