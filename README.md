@@ -1,7 +1,6 @@
 # expeditioneer's Gentoo overlay 
 
-[![Build Status](https://travis-ci.com/expeditioneer/gentoo-overlay.svg?branch=master)](https://travis-ci.com/expeditioneer/gentoo-overlay)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/426681dd10d14fa7ac671af4e0d826d9)](https://www.codacy.com/manual/expeditioneer/gentoo-overlay?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=expeditioneer/gentoo-overlay&amp;utm_campaign=Badge_Grade)
+![Build Status](https://github.com/expeditioneer/gentoo-overlay/actions/workflows/pkgcheck.yml/badge.svg)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/expeditioneer/gentoo-overlay/graphs/commit-activity)
 [![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
