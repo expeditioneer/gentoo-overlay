@@ -1,4 +1,4 @@
-# Copyright 1999-2021 Gentoo Authors
+# Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -42,6 +42,13 @@ RDEPEND="
 		webkit? ( net-libs/webkit-gtk:4 )
 		)
 "
+# TODO: further dependencies
+#Package 'gnome-vfs-2.0', required by 'virtual:world', not found
+#-- libgnomevfs not found, library won't be used to associate MIME type
+# Could NOT find PCRE2 (missing: PCRE2_LIBRARIES) (found version "")
+# wxUSE_NANOSVG:    builtin  (use NanoSVG for rasterizing SVG)
+# wxUSE_REGEX:      builtin  (enable support for wxRegEx class)
+
 DEPEND="${RDEPEND}
 	opengl? ( virtual/glu[${MULTILIB_USEDEP}] )
 	X? ( x11-base/xorg-proto )"
@@ -51,8 +58,8 @@ PDEPEND=">=app-eselect/eselect-wxwidgets-20131230"
 S="${WORKDIR}/wxWidgets-${PV}"
 
 PATCHES=(
-	"${FILESDIR}/${P}-gcc-werror.patch"
 	"${FILESDIR}/${P}-no-prestrip.patch"
+	"${FILESDIR}/${P}-gcc-werror.patch"
 	"${FILESDIR}/wxGTK-$(ver_cut 1-2)-slotting.patch"
 )
 

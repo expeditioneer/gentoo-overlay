@@ -1,6 +1,6 @@
 --- a/tests/allheaders.cpp
 +++ b/tests/allheaders.cpp
-@@ -265,7 +265,7 @@
+@@ -225,7 +225,7 @@
  #endif // 7.1
      GCC_TURN_ON(return-type)
      GCC_TURN_ON(sequence-point)
@@ -9,7 +9,7 @@
  #if CHECK_GCC_VERSION(6,1)
      GCC_TURN_ON(shift-negative-value)
  #endif // 6.1
-@@ -348,7 +348,7 @@
+@@ -307,7 +307,7 @@
      GCC_TURN_ON(volatile-register-var)
      GCC_TURN_ON(write-strings)
  #if CHECK_GCC_VERSION(4,7)
@@ -20,7 +20,7 @@
 
 --- a/configure.in
 +++ b/configure.in
-@@ -6401,7 +6401,7 @@
+@@ -6412,7 +6412,7 @@
                          dnl least with gcc (otherwise we'd always use size_t)
                          CFLAGS_OLD="$CFLAGS"
                          if test "$GCC" = yes ; then

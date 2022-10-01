@@ -1,6 +1,6 @@
 --- a/build/cmake/options.cmake
 +++ b/build/cmake/options.cmake
-@@ -62,11 +62,7 @@
+@@ -64,11 +64,7 @@
 
  wx_option(wxBUILD_OPTIMISE "use speed-optimised C/C++ compiler flags for release build" OFF)
  mark_as_advanced(wxBUILD_OPTIMISE)
