@@ -5,6 +5,9 @@
 		<email>expeditioneer@gentoo.org</email>
 		<name>Dennis Lamm</name>
 	</maintainer>
+	<use>
+		<flag name="lzma">use LZMA compression</flag>
+	</use>
 	<slots>
 		<slot name="*">Slots reflect MAJOR.MINOR versions which can be installed in parallel.</slot>
 	</slots>

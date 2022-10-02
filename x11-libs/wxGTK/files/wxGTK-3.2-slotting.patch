@@ -174,7 +174,7 @@
      install(
          DIRECTORY "${wxSETUP_HEADER_PATH}"
 -        DESTINATION "lib/wx/include")
-+        DESTINATION "${CMAKE_INSTALL_LIBDIR}/wx-${wxMAJOR_VERSION}.${wxMINOR_VERSION}/include")
++        DESTINATION "${CMAKE_INSTALL_LIBDIR}/wx/include")
 
      install(
          FILES "${wxOUTPUT_DIR}/wx/config/${wxBUILD_FILE_ID}"

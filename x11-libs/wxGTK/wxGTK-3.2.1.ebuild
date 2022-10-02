@@ -15,38 +15,35 @@ LICENSE="wxWinLL-3 GPL-2 doc? ( wxWinFDL-3 )"
 
 KEYWORDS="~amd64 ~x86"
 SLOT="$(ver_cut 1-2)/${PV}"
-IUSE="doc debug gstreamer libnotify opengl sdl test tiff webkit +X"
+IUSE="doc debug libnotify lzma opengl sdl test tiff webkit +X"
 RESTRICT="!test? ( test )"
 
 RDEPEND="
 	dev-libs/expat[${MULTILIB_USEDEP}]
+	lzma? ( app-arch/xz-utils )
 	sdl? ( media-libs/libsdl[${MULTILIB_USEDEP}] )
 	X? (
 		>=dev-libs/glib-2.22:2[${MULTILIB_USEDEP}]
+    media-libs/gstreamer:1.0[${MULTILIB_USEDEP}]
+    media-libs/gst-plugins-base:1.0[${MULTILIB_USEDEP}]
 		media-libs/libjpeg-turbo:=[${MULTILIB_USEDEP}]
 		media-libs/libpng:0=[${MULTILIB_USEDEP}]
 		sys-libs/zlib[${MULTILIB_USEDEP}]
 		x11-libs/cairo[${MULTILIB_USEDEP}]
-		x11-libs/gtk+:3[${MULTILIB_USEDEP}]
 		x11-libs/gdk-pixbuf[${MULTILIB_USEDEP}]
 		x11-libs/libSM[${MULTILIB_USEDEP}]
 		x11-libs/libX11[${MULTILIB_USEDEP}]
 		x11-libs/libXxf86vm[${MULTILIB_USEDEP}]
 		x11-libs/pango[${MULTILIB_USEDEP}]
-		gstreamer? (
-			media-libs/gstreamer:1.0[${MULTILIB_USEDEP}]
-			media-libs/gst-plugins-base:1.0[${MULTILIB_USEDEP}] )
 		libnotify? ( x11-libs/libnotify[${MULTILIB_USEDEP}] )
 		opengl? ( virtual/opengl[${MULTILIB_USEDEP}] )
 		tiff?   ( media-libs/tiff:0[${MULTILIB_USEDEP}] )
 		webkit? ( net-libs/webkit-gtk:4 )
+		|| (
+      x11-libs/gtk+:3[${MULTILIB_USEDEP}]
+      gui-libs/gtk:4[${MULTILIB_USEDEP}] )
 		)
 "
-# TODO: further dependencies
-# Could NOT find PCRE2 (missing: PCRE2_LIBRARIES) (found version "")
-# wxUSE_NANOSVG:    builtin  (use NanoSVG for rasterizing SVG)
-# wxUSE_REGEX:      builtin  (enable support for wxRegEx class)
-
 DEPEND="${RDEPEND}
 	opengl? ( virtual/glu[${MULTILIB_USEDEP}] )
 	X? ( x11-base/xorg-proto )"
@@ -69,10 +66,18 @@ multilib_src_configure() {
 	# wxDEBUG_LEVEL=2 enables assertions that have expensive runtime costs.
 	# apps can disable these features by building w/ -NDEBUG or wxDEBUG_LEVEL_0.
 	# https://docs.wxwidgets.org/3.2/overview_debugging.html
+
+	# wxUSE_LIBGNOMEVFS=OFF # bug #203389
 	local mycmakeargs=(
 		-DwxBUILD_DEBUG_LEVEL=$(usex debug 2 1)
 		-DwxBUILD_TESTS=$(usex test ALL OFF)
 		-DwxUSE_LIBGNOMEVFS=OFF
+		-DwxUSE_LIBLZMA=$(usex lzma ON OFF)
+		-DwxUSE_LIBNOTIFY=$(usex libnotify ON OFF)
+		-DwxUSE_LIBSDL=$(usex sdl ON OFF)
+		-DwxUSE_LIBTIFF=$(usex tiff sys OFF)
+		-DwxUSE_OPENGL=$(usex opengl ON OFF)
+		-DwxUSE_WEBVIEW_WEBKIT=$(usex webkit ON OFF)
 		-Wno-dev
 	)
 	cmake_src_configure
