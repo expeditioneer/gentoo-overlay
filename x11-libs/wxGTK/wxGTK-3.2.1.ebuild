@@ -13,7 +13,7 @@ SRC_URI="
 
 LICENSE="wxWinLL-3 GPL-2 doc? ( wxWinFDL-3 )"
 
-KEYWORDS="~amd64"
+KEYWORDS="~amd64 ~x86"
 SLOT="$(ver_cut 1-2)/${PV}"
 IUSE="doc debug gstreamer libnotify opengl sdl test tiff webkit +X"
 RESTRICT="!test? ( test )"
