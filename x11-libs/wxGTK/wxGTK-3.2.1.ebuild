@@ -70,7 +70,7 @@ multilib_src_configure() {
 	# wxDEBUG_LEVEL=1 is the default and we will leave it enabled
 	# wxDEBUG_LEVEL=2 enables assertions that have expensive runtime costs.
 	# apps can disable these features by building w/ -NDEBUG or wxDEBUG_LEVEL_0.
-	# https://docs.wxwidgets.org/3.1/overview_debugging.html
+	# https://docs.wxwidgets.org/3.2/overview_debugging.html
 	local mycmakeargs=(
 		-DwxBUILD_DEBUG_LEVEL=$(usex debug 2 1)
 		-DwxBUILD_TESTS=$(usex test ALL OFF)
@@ -85,7 +85,6 @@ multilib_src_install_all() {
 	newdoc base/readme.txt base_readme.txt
 	newdoc gtk/readme.txt gtk_readme.txt
 
-	use doc && HTML_DOCS="${WORKDIR}"/wxWidgets-${PV}-docs-html/.
 	einstalldocs
 }
 
