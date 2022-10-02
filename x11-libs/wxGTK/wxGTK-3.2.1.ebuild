@@ -43,8 +43,6 @@ RDEPEND="
 		)
 "
 # TODO: further dependencies
-#Package 'gnome-vfs-2.0', required by 'virtual:world', not found
-#-- libgnomevfs not found, library won't be used to associate MIME type
 # Could NOT find PCRE2 (missing: PCRE2_LIBRARIES) (found version "")
 # wxUSE_NANOSVG:    builtin  (use NanoSVG for rasterizing SVG)
 # wxUSE_REGEX:      builtin  (enable support for wxRegEx class)
@@ -74,6 +72,7 @@ multilib_src_configure() {
 	local mycmakeargs=(
 		-DwxBUILD_DEBUG_LEVEL=$(usex debug 2 1)
 		-DwxBUILD_TESTS=$(usex test ALL OFF)
+		-DwxUSE_LIBGNOMEVFS=OFF
 		-Wno-dev
 	)
 	cmake_src_configure
