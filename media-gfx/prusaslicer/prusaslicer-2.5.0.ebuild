@@ -18,7 +18,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE="test"
 
-RESTRICT="test"
+RESTRICT="!test? ( test )"
 
 RDEPEND="
 	dev-cpp/eigen:3
