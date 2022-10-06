@@ -2,11 +2,11 @@
 
 [![Build Status](https://github.com/expeditioneer/gentoo-overlay/actions/workflows/pkgcheck.yml/badge.svg)](https://github.com/expeditioneer/gentoo-overlay/actions/workflows/pkgcheck.yml)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/expeditioneer/gentoo-overlay/graphs/commit-activity)
-[![Open Source Love svg2](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
 ## Using with Portage
 Create a new config file under `/etc/portage/repos.conf/expeditioneer.conf` with the following contents:
-```
+```ini
 [expeditioneer]
 auto-sync = yes
 location = /var/db/repos/expeditioneer
@@ -23,7 +23,7 @@ If you find a bug in an ebuild, encounter a build error or would like me to add 
 
 I gladly accept pull requests for bugs or new ebuilds. Before opening a pull request, please make sure your changes don't upset [`repoman`](https://wiki.gentoo.org/wiki/Repoman). Run the following command and fix warnings and errors:
 ```shell
-repoman --xmlparse --pretend
+pkgcheck scan
 ```
 ## Acknowledgements
 
