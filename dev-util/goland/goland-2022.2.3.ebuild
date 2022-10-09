@@ -1,9 +1,9 @@
 # Copyright 1999-2022 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=7
+EAPI=8
 
-inherit desktop eutils
+inherit desktop wrapper xdg-utils
 
 SLOT=0
 
@@ -46,11 +46,14 @@ RDEPEND="
 
 src_install() {
 	local dir="/opt/${P}"
+	local JRE_DIR="jbr"
 
 	insinto "${dir}"
 	doins -r *
-	fperms 755 "${dir}"/bin/{${PN}.sh,fsnotifier}
-	fperms 755 "${dir}"/jbr/bin/{jaotc,java,javac,jdb,jfr,jhsdb,jjs,jrunscript,keytool,pack200,rmid,rmiregistry,serialver,unpack200}
+	fperms 755 "${dir}"/bin/{${PN}.sh,format.sh,fsnotifier,inspect.sh,ltedit.sh,restart.py}
+
+	fperms 755 "${dir}"/"${JRE_DIR}"/bin/{java,javac,javadoc,jcmd,jdb,jfr,jhsdb,jinfo,jmap,jps,jrunscript,jstack,jstat,keytool,rmiregistry,serialver}
+	fperms 755 "${dir}"/"${JRE_DIR}"/lib/{chrome-sandbox,jcef_helper,jexec,jspawnhelper}
 	fperms 755 "${dir}"/plugins/go/lib/dlv/linux/dlv
 
 	make_wrapper "${PN}" "${dir}/bin/${PN}.sh"
@@ -86,4 +89,10 @@ pkg_postinst() {
 			break
 		fi
 	done
+
+	xdg_icon_cache_update
+}
+
+pkg_postrm() {
+	xdg_icon_cache_update
 }
