@@ -1,22 +1,38 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
 inherit desktop wrapper
 
+SLOT=0
+
 SRC_URI="https://download.jetbrains.com/ruby/RubyMine-${PV}.tar.gz -> ${P}.tar.gz"
 DESCRIPTION="The Most Intelligent Ruby and Rails IDE"
 HOMEPAGE="https://www.jetbrains.com/ruby/"
 
-LICENSE="
-	|| ( jetbrains_business-4.0 jetbrains_individual-4.2 jetbrains_educational-4.0 jetbrains_classroom-4.2 jetbrains_opensource-4.2 )
-	Apache-1.1 Apache-2.0 BSD BSD-2 CC0-1.0 CDDL CPL-1.0 GPL-2 GPL-2-with-classpath-exception GPL-3 ISC LGPL-2.1 LGPL-3 MIT MPL-1.1 OFL trilead-ssh yFiles yourkit
-"
-SLOT="0"
 KEYWORDS="~amd64"
+
+LICENSE="|| ( JetBrains-business JetBrains-classroom JetBrains-educational JetBrains-individual )
+	Apache-2.0
+	BSD
+	CC0-1.0
+	CDDL
+	CDDL-1.1
+	EPL-1.0
+	GPL-2
+	GPL-2-with-classpath-exception
+	ISC
+	LGPL-2.1
+	LGPL-3
+	MIT
+	MPL-1.1
+	OFL
+	ZLIB
+"
+
 RESTRICT="bindist mirror splitdebug"
-IUSE=""
+
 QA_PREBUILT="opt/${P}/*"
 RDEPEND="
 	dev-libs/libdbusmenu
