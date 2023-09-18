@@ -45,10 +45,10 @@ RDEPEND="
 "
 
 src_prepare() {
-    default
-    local undesired_plugins=(
+	default
+	local undesired_plugins=(
 		help/ReferenceCardForMac.pdf
-        plugins/cwm-plugin/quiche-native/darwin-aarch64
+		plugins/cwm-plugin/quiche-native/darwin-aarch64
 		plugins/cwm-plugin/quiche-native/darwin-x86-64
 		plugins/cwm-plugin/quiche-native/linux-aarch64
 		plugins/cwm-plugin/quiche-native/win32-x86-64
@@ -84,13 +84,13 @@ src_install() {
 }
 
 pkg_postinst() {
-    echo
-    elog "It is strongly recommended to increase the inotify watch limit"
-    elog "to at least 524288. You can achieve this e.g. by calling"
-    elog "echo \"fs.inotify.max_user_watches = 524288\" > /etc/sysctl.d/30-idea-inotify-watches.conf"
-    elog "and reloading with \"sysctl --system\" (and restarting the IDE)."
-    elog "For details see:"
-    elog "    https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit"
+	echo
+	elog "It is strongly recommended to increase the inotify watch limit"
+	elog "to at least 524288. You can achieve this e.g. by calling"
+	elog "echo \"fs.inotify.max_user_watches = 524288\" > /etc/sysctl.d/30-idea-inotify-watches.conf"
+	elog "and reloading with \"sysctl --system\" (and restarting the IDE)."
+	elog "For details see:"
+	elog "    https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit"
 
 	xdg_icon_cache_update
 }
