@@ -1,4 +1,4 @@
-# Copyright 1999-2022 Gentoo Authors
+# Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
@@ -44,6 +44,29 @@ RDEPEND="
 	dev-lang/go
 "
 
+src_prepare() {
+    default
+    local undesired_plugins=(
+		help/ReferenceCardForMac.pdf
+        plugins/cwm-plugin/quiche-native/darwin-aarch64
+		plugins/cwm-plugin/quiche-native/darwin-x86-64
+		plugins/cwm-plugin/quiche-native/linux-aarch64
+		plugins/cwm-plugin/quiche-native/win32-x86-64
+		plugins/gateway-plugin/lib/remote-dev-workers/remote-dev-worker-darwin-amd64
+		plugins/gateway-plugin/lib/remote-dev-workers/remote-dev-worker-darwin-arm64
+		plugins/gateway-plugin/lib/remote-dev-workers/remote-dev-worker-linux-arm64
+		plugins/gateway-plugin/lib/remote-dev-workers/remote-dev-worker-windows-amd64.exe
+		plugins/gateway-plugin/lib/remote-dev-workers/remote-dev-worker-windows-arm64.exe
+		plugins/go-plugin/lib/dlv/linuxarm
+		plugins/go-plugin/lib/dlv/mac
+		plugins/go-plugin/lib/dlv/macarm
+		plugins/go-plugin/lib/dlv/windows
+		plugins/go-plugin/lib/dlv/windowsarm
+	)
+
+	rm -rv "${undesired_plugins[@]}" || die
+}
+
 src_install() {
 	local dir="/opt/${P}"
 	local JRE_DIR="jbr"
@@ -54,7 +77,6 @@ src_install() {
 
 	fperms 755 "${dir}"/"${JRE_DIR}"/bin/{java,javac,javadoc,jcmd,jdb,jfr,jhsdb,jinfo,jmap,jps,jrunscript,jstack,jstat,keytool,rmiregistry,serialver}
 	fperms 755 "${dir}"/"${JRE_DIR}"/lib/{chrome-sandbox,jcef_helper,jexec,jspawnhelper}
-	fperms 755 "${dir}"/plugins/go/lib/dlv/linux/dlv
 
 	make_wrapper "${PN}" "${dir}/bin/${PN}.sh"
 	newicon "bin/${PN}.png" "${PN}.png"
@@ -62,33 +84,13 @@ src_install() {
 }
 
 pkg_postinst() {
-	if [[ -z "${REPLACING_VERSIONS}" ]]; then
-			# This is a new installation, so:
-			echo
-			elog "It is strongly recommended to increase the inotify watch limit"
-			elog "to at least 524288. You can achieve this e.g. by calling"
-			elog "echo \"fs.inotify.max_user_watches = 524288\" > /etc/sysctl.d/30-idea-inotify-watches.conf"
-			elog "and reloading with \"sysctl --system\" (and restarting the IDE)."
-			elog "For details see:"
-			elog "    https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit"
-	fi
-
-	local replacing_version
-	for replacing_version in ${REPLACING_VERSIONS} ; do
-		if ver_test "${replacing_version}" -lt "2019.3-r1"; then
-			# This revbump requires user interaction.
-			echo
-			ewarn "Previous versions configured fs.inotify.max_user_watches without user interaction."
-			ewarn "Since version 2019.3-r1 you need to do so manually, e.g. by calling"
-			ewarn "echo \"fs.inotify.max_user_watches = 524288\" > /etc/sysctl.d/30-idea-inotify-watches.conf"
-			ewarn "and reloading with \"sysctl --system\" (and restarting the IDE)."
-			ewarn "For details see:"
-			ewarn "    https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit"
-
-			# Show this ewarn only once
-			break
-		fi
-	done
+    echo
+    elog "It is strongly recommended to increase the inotify watch limit"
+    elog "to at least 524288. You can achieve this e.g. by calling"
+    elog "echo \"fs.inotify.max_user_watches = 524288\" > /etc/sysctl.d/30-idea-inotify-watches.conf"
+    elog "and reloading with \"sysctl --system\" (and restarting the IDE)."
+    elog "For details see:"
+    elog "    https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit"
 
 	xdg_icon_cache_update
 }
