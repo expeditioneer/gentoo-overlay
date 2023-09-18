@@ -13,4 +13,8 @@
 	<use>
 		<flag name="lto">Enable Link Time Optimization (LTO)</flag>
 	</use>
+	<upstream>
+		<bugs-to>https://github.com/Komet/MediaElch/issues</bugs-to>
+		<remote-id type="github">Komet/MediaElch</remote-id>
+	</upstream>
 </pkgmetadata>
