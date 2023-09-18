@@ -31,13 +31,13 @@ RDEPEND="${DEPEND}"
 src_prepare() {
 	default
 	local undesired_files=(
-	    CODE-OF-CONDUCT.md
-	    LICENSE
-	    OWNERS
-	    RELEASE_NOTES.md
+		CODE-OF-CONDUCT.md
+		LICENSE
+		OWNERS
+		RELEASE_NOTES.md
 	)
 
-    rm -rv "${undesired_files[@]}" || die
+	rm -rv "${undesired_files[@]}" || die
 }
 
 src_compile() {
