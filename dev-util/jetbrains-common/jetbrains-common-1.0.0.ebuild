@@ -11,6 +11,8 @@ DESCRIPTION="Common configuration for all JetBrains IDEs"
 HOMEPAGE="https://www.jetbrains.com/"
 LICENSE="GPL-3"
 
+KEYWORDS="amd64"
+
 src_install() {
 	insinto /etc/sysctl.d/
 	doins "${FILESDIR}/30-jetbrains-inotify-watches.conf"
