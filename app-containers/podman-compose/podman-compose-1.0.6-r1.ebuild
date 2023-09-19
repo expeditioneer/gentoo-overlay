@@ -19,9 +19,12 @@ IUSE="test"
 RESTRICT="!test? ( test )"
 
 RDEPEND="
-	app-containers/dnsname-cni-plugin
 	dev-python/python-dotenv[${PYTHON_USEDEP}]
 	dev-python/pyyaml[${PYTHON_USEDEP}]
+	|| (
+		>=app-containers/cni-plugins-0.8.6
+		( app-containers/netavark app-containers/aardvark-dns )
+	)
 "
 
 BDEPEND="
