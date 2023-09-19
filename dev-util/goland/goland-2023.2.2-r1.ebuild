@@ -11,8 +11,6 @@ SRC_URI="https://download.jetbrains.com/go/${P}.tar.gz"
 DESCRIPTION="Golang IDE by JetBrains"
 HOMEPAGE="https://www.jetbrains.com/go"
 
-# JetBrains supports officially only x86_64 even though some 32bit binaries are
-# provided. See https://www.jetbrains.com/go/download/#section=linux
 KEYWORDS="~amd64"
 
 LICENSE="|| ( JetBrains-business JetBrains-classroom JetBrains-educational JetBrains-individual )
@@ -40,6 +38,7 @@ QA_PREBUILT="opt/${P}/*"
 S="${WORKDIR}/GoLand-${PV}"
 
 RDEPEND="
+	dev-util/jetbrains-common
 	virtual/jdk
 	dev-lang/go
 "
@@ -84,14 +83,6 @@ src_install() {
 }
 
 pkg_postinst() {
-	echo
-	elog "It is strongly recommended to increase the inotify watch limit"
-	elog "to at least 524288. You can achieve this e.g. by calling"
-	elog "echo \"fs.inotify.max_user_watches = 524288\" > /etc/sysctl.d/30-idea-inotify-watches.conf"
-	elog "and reloading with \"sysctl --system\" (and restarting the IDE)."
-	elog "For details see:"
-	elog "    https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit"
-
 	xdg_icon_cache_update
 }
 
