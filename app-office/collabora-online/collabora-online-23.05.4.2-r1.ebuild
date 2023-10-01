@@ -38,7 +38,7 @@ S="${WORKDIR}/online-cp-${MY_PV}"
 # TODO: fetch NPM dependencies - currently only working when 'FEATURES="-network-sandbox" is set :-(
 src_prepare() {
 	sed --in-place \
-		--expression='s#nginxconfigdir = ${sysconfdir}/nginx/snippets#nginxconfigdir = ${sysconfdir}/nginx/conf.d' \
+		--expression='s#nginxconfigdir = ${sysconfdir}/nginx/snippets#nginxconfigdir = ${sysconfdir}/nginx/conf.d#g' \
 		Makefile.am || die
 
 	default
