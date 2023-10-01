@@ -22,6 +22,7 @@ KEYWORDS="~amd64"
 
 DEPEND="
 	app-office/libreoffice
+	net-libs/nodejs
 	dev-libs/poco
 	dev-python/polib
 "
