@@ -1,6 +1,6 @@
 --- a/coolwsd.service
 +++ b/coolwsd.service
-@@ -3,8 +3,7 @@
+@@ -3,17 +3,16 @@
  After=network.target
 
  [Service]
@@ -9,8 +9,10 @@
 +ExecStart=/usr/bin/coolwsd --config-file=/etc/coolwsd/coolwsd.xml
  KillSignal=SIGINT
  TimeoutStopSec=120
- User=cool
-@@ -13,7 +12,7 @@
+-User=cool
++User=collabora-online
+ KillMode=control-group
+ Restart=always
  LimitNOFILE=infinity:infinity
 
  ProtectSystem=strict

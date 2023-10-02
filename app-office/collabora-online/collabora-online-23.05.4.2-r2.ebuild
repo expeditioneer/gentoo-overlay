@@ -21,6 +21,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="
+	acct-user/collabora-online
 	app-office/libreoffice
 	net-libs/nodejs
 	dev-libs/poco
@@ -36,7 +37,6 @@ PATCHES=(
 
 S="${WORKDIR}/online-cp-${MY_PV}"
 
-# TODO: fetch NPM dependencies - currently only working when 'FEATURES="-network-sandbox" is set :-(
 src_prepare() {
 	sed --in-place \
 		--expression='s#nginxconfigdir = ${sysconfdir}/nginx/snippets#nginxconfigdir = ${sysconfdir}/nginx/conf.d#g' \
@@ -44,6 +44,8 @@ src_prepare() {
 
 	default
 	eautoreconf
+
+	# TODO: fetch NPM dependencies - currently only working when 'FEATURES="-network-sandbox" is set :-(
 	cd browser && npm update --no-audit
 }
 
@@ -67,8 +69,6 @@ src_install() {
 	systemd_newunit coolwsd.service collabora-online.service
 }
 
-# TODO: create System-USER 'cool'
-# package() {
 #     cd "${pkgdir}"/usr/local/
 #     mv etc ../../
 #     mv bin ../
@@ -82,5 +82,3 @@ src_install() {
 #     cd "${pkgdir}"
 #     mkdir -p var/lib/coolwsd/systemplate
 #     cp -r "${srcdir}"/instdir "${pkgdir}"/usr/share/coolwsd/libreoffice
-#     mkdir -p usr/lib/systemd/system
-#     cp "${srcdir}"/online/coolwsd.service usr/lib/systemd/system
