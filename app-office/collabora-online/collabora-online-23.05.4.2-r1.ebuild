@@ -56,6 +56,7 @@ local ENABLE_GTKAPP=no
 		--with-vendor=gentoo
 		--disable-setcap
 		--disable-tests
+		--disable-werror
 	)
 
 	econf "${myeconfargs[@]}"
