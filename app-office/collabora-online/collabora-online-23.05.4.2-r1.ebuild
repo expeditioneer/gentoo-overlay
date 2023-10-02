@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit autotools
+inherit autotools systemd
 
 MY_PV=$(ver_cut 1-3)-$(ver_cut 4)
 
@@ -44,6 +44,7 @@ src_prepare() {
 
 	default
 	eautoreconf
+	cd browser && npm update --no-audit
 }
 
 src_configure() {
@@ -62,6 +63,7 @@ local ENABLE_GTKAPP=no
 
 src_install() {
 	emake install DESTDIR="${D}" PREFIX="/usr"
+	systemd_newunit coolwsd.service collabora-online.service
 }
 
 # TODO: create System-USER 'cool'
