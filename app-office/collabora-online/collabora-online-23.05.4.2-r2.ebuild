@@ -73,7 +73,7 @@ src_install() {
 }
 
 pkg_postinst() {
-    fcaps cap_chown cap_fowner cap_sys_chroot=ep cap_mknod - /usr/bin/coolforkit
+    fcaps cap_chown,cap_fowner,cap_sys_chroot=ep,cap_mknod /usr/bin/coolforkit
     fcaps cap_sys_admin=ep /usr/bin/coolmount
 
     einfo "If you need to use WOPI security, generate an RSA key using this command:"
