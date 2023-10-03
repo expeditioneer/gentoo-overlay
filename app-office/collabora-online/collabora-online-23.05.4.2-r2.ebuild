@@ -37,6 +37,11 @@ PATCHES=(
 
 S="${WORKDIR}/online-cp-${MY_PV}"
 
+FILECAPS=(
+	cap_chown,cap_fowner,cap_sys_chroot+ep,cap_mknod usr/bin/coolforkit --
+    cap_sys_admin+ep usr/bin/coolmount
+)
+
 src_prepare() {
 	sed --in-place \
 		--expression='s#nginxconfigdir = ${sysconfdir}/nginx/snippets#nginxconfigdir = ${sysconfdir}/nginx/conf.d#g' \
@@ -68,39 +73,16 @@ src_install() {
 	emake install DESTDIR="${D}" PREFIX="/usr"
 	systemd_newunit coolwsd.service collabora-online.service
 
-    keepdir /var/lib/coolwsd
-    fowners cool:cool /var/lib/coolwsd
+    keepdir /var/lib/coolwsd/{systemplate,jails}
+    fowners -R cool:cool /var/lib/coolwsd
 }
 
 pkg_postinst() {
-    fcaps cap_chown,cap_fowner,cap_sys_chroot=ep,cap_mknod /usr/bin/coolforkit
-    fcaps cap_sys_admin=ep /usr/bin/coolmount
+    fcaps_pkg_postinst
 
-    einfo "If you need to use WOPI security, generate an RSA key using this command:"
-    einfo "#sudo coolconfig generate-proof-key"
-    einfo "or if your config dir is not /etc, you can run ssh-keygen manually:"
-    einfo "#ssh-keygen -t rsa -N \"\" -m PEM -f \"/etc/coolwsd/proof_key\""
-    einfo "Note: the proof_key file must be readable by the coolwsd process."
+    elog "If you need to use WOPI security, generate an RSA key using this command:"
+    elog "#sudo coolconfig generate-proof-key"
+    elog "or if your config dir is not /etc, you can run ssh-keygen manually:"
+    elog "#ssh-keygen -t rsa -N \"\" -m PEM -f \"/etc/coolwsd/proof_key\""
+    elog "Note: the proof_key file must be readable by the coolwsd process."
 }
-
-#     cd "${pkgdir}"/usr/local/
-#     mv etc ../../
-#     mv bin ../
-#     mv share ../
-#     cd ..
-#     rm local -r
-#     cd "${pkgdir}"/etc
-#     mkdir -p httpd/conf/extra
-#     mv apache2/conf-available/coolwsd.conf httpd/conf/extra/
-#     rm -r apache2
-#     cd "${pkgdir}"
-#     mkdir -p var/lib/coolwsd/systemplate
-#     cp -r "${srcdir}"/instdir "${pkgdir}"/usr/share/coolwsd/libreoffice
-# cp -r "${WORKDIR}/instdir" "${D}/test/bins" || die
-
-# TODO:
-# create /var/lib/coolwsd/systemplate (permissions)
-# create /var/lib/coolwsd/jails (permissions)
-
-# provide /etc/coolwsd/ca-chain.cert.pem
-# provide etc/coolwsd/key.pem
