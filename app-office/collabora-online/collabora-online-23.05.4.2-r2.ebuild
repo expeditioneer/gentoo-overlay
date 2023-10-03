@@ -69,7 +69,7 @@ src_install() {
 	systemd_newunit coolwsd.service collabora-online.service
 
     keepdir /var/lib/coolwsd
-    fowners ${PN}:${PN} /var/lib/coolwsd
+    fowners cool:cool /var/lib/coolwsd
 }
 
 pkg_postinst() {
