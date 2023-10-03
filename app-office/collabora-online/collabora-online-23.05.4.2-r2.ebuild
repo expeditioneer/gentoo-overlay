@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit autotools systemd
+inherit autotools fcaps systemd
 
 MY_PV=$(ver_cut 1-3)-$(ver_cut 4)
 
@@ -21,7 +21,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 
 DEPEND="
-	acct-user/collabora-online
+	acct-user/cool
 	app-office/libreoffice
 	net-libs/nodejs
 	dev-libs/poco
@@ -67,6 +67,20 @@ local ENABLE_GTKAPP=no
 src_install() {
 	emake install DESTDIR="${D}" PREFIX="/usr"
 	systemd_newunit coolwsd.service collabora-online.service
+
+    keepdir /var/lib/coolwsd
+    fowners ${PN}:${PN} /var/lib/coolwsd
+}
+
+pkg_postinst() {
+    fcaps cap_chown cap_fowner cap_sys_chroot=ep cap_mknod - /usr/bin/coolforkit
+    fcaps cap_sys_admin=ep /usr/bin/coolmount
+
+    einfo "If you need to use WOPI security, generate an RSA key using this command:"
+    einfo "#sudo coolconfig generate-proof-key"
+    einfo "or if your config dir is not /etc, you can run ssh-keygen manually:"
+    einfo "#ssh-keygen -t rsa -N \"\" -m PEM -f \"/etc/coolwsd/proof_key\""
+    einfo "Note: the proof_key file must be readable by the coolwsd process."
 }
 
 #     cd "${pkgdir}"/usr/local/
@@ -82,3 +96,11 @@ src_install() {
 #     cd "${pkgdir}"
 #     mkdir -p var/lib/coolwsd/systemplate
 #     cp -r "${srcdir}"/instdir "${pkgdir}"/usr/share/coolwsd/libreoffice
+# cp -r "${WORKDIR}/instdir" "${D}/test/bins" || die
+
+# TODO:
+# create /var/lib/coolwsd/systemplate (permissions)
+# create /var/lib/coolwsd/jails (permissions)
+
+# provide /etc/coolwsd/ca-chain.cert.pem
+# provide etc/coolwsd/key.pem

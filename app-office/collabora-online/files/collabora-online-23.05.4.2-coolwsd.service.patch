@@ -9,8 +9,7 @@
 +ExecStart=/usr/bin/coolwsd --config-file=/etc/coolwsd/coolwsd.xml
  KillSignal=SIGINT
  TimeoutStopSec=120
--User=cool
-+User=collabora-online
+ User=cool
  KillMode=control-group
  Restart=always
  LimitNOFILE=infinity:infinity
