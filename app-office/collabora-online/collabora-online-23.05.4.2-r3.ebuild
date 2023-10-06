@@ -9,11 +9,7 @@ MY_PV=$(ver_cut 1-3)-$(ver_cut 4)
 
 DESCRIPTION="A collaborative online office suite based on LibreOffice technology."
 HOMEPAGE="https://collaboraonline.github.io/"
-SRC_URI="
-	https://github.com/CollaboraOnline/online/archive/refs/tags/cp-${MY_PV}.tar.gz -> ${P}.gh.tar.gz
-	https://github.com/CollaboraOnline/online/releases/download/for-code-assets/core-co-$(ver_cut 1-2)-assets.tar.gz
-		-> ${P}-assets.gh.tar.gz
-"
+SRC_URI="https://github.com/CollaboraOnline/online/archive/refs/tags/cp-${MY_PV}.tar.gz -> ${P}.gh.tar.gz"
 
 LICENSE="MPL-2.0"
 
@@ -22,10 +18,10 @@ KEYWORDS="~amd64"
 
 DEPEND="
 	acct-user/cool
-	app-office/libreoffice
-	net-libs/nodejs
+	app-office/collabora-core-assets
 	dev-libs/poco
 	dev-python/polib
+	net-libs/nodejs
 "
 
 RDEPEND="${DEPEND}"
@@ -44,8 +40,12 @@ FILECAPS=(
 
 src_prepare() {
 	sed --in-place \
-		--expression='s#nginxconfigdir = ${sysconfdir}/nginx/snippets#nginxconfigdir = ${sysconfdir}/nginx/conf.d/collabora#g' \
+		--expression='s#${sysconfdir}/nginx/snippets#${sysconfdir}/nginx/conf.d/collabora#g' \
 		Makefile.am || die
+
+	sed --in-place \
+		--expression='s#http://#https://#g' \
+		etc/nginx/coolwsd.conf || die
 
 	default
 	eautoreconf
@@ -58,8 +58,8 @@ src_configure() {
 local ENABLE_GTKAPP=no
 
 	local myeconfargs=(
-		--with-lo-path="/usr/$(get_libdir)/libreoffice"
-		--with-lokit-path="${WORKDIR}/include"
+		--with-lo-path="/usr/share/coolwsd/libreoffice"
+		--with-lokit-path="/usr/share/coolwsd/libreoffice-kit"
 		--with-vendor=gentoo
 		--disable-setcap
 		--disable-tests
@@ -75,6 +75,9 @@ src_install() {
 
 	keepdir /var/lib/coolwsd/{systemplate,jails}
 	fowners -R cool:cool /var/lib/coolwsd
+
+	fperms 0640 /etc/coolwsd/coolwsd.xml
+	fowners -R cool:cool
 }
 
 pkg_postinst() {
@@ -86,3 +89,8 @@ pkg_postinst() {
 	elog "#ssh-keygen -t rsa -N \"\" -m PEM -f \"/etc/coolwsd/proof_key\""
 	elog "Note: the proof_key file must be readable by the coolwsd process."
 }
+
+# coolwsd-systemplate-setup /var/lib/coolwsd/systemplate instdir
+# but requires /etc/timezone information 'which should contain the timezone e.g. Europe/Berlin'
+# could be retrieved via:
+# #timedatectl status | grep "zone" | sed -e 's/^[ ]*Time zone: \(.*\) (.*)$/\1/g'
