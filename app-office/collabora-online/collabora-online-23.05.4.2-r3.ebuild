@@ -77,7 +77,7 @@ src_install() {
 	fowners -R cool:cool /var/lib/coolwsd
 
 	fperms 0640 /etc/coolwsd/coolwsd.xml
-	fowners -R cool:cool
+	fowners -R cool:cool /etc/coolwsd/coolwsd.xml
 }
 
 pkg_postinst() {
