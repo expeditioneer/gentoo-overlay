@@ -1,6 +1,6 @@
 # Copyright 1999-2023 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-
+	# TODO: remove apache webserver stuff (/etc/apache/coolwsd.conf?)
 EAPI=8
 
 inherit autotools fcaps systemd
@@ -15,12 +15,15 @@ LICENSE="MPL-2.0"
 
 SLOT="0"
 KEYWORDS="~amd64"
+IUSE="test"
+RESTRICT="!test? ( test )"
 
 DEPEND="
 	acct-user/cool
 	app-office/collabora-core-assets
 	dev-libs/poco
 	dev-python/polib
+	test? ( dev-util/cppunit )
 	net-libs/nodejs
 "
 
@@ -62,8 +65,8 @@ local ENABLE_GTKAPP=no
 		--with-lokit-path="/usr/share/coolwsd/libreoffice-kit"
 		--with-vendor=gentoo
 		--disable-setcap
-		--disable-tests
 		--disable-werror
+		$(use_enable test tests)
 	)
 
 	econf "${myeconfargs[@]}"
