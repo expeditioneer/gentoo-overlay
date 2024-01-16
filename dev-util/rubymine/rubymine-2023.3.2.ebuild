@@ -1,9 +1,9 @@
-# Copyright 1999-2023 Gentoo Authors
+# Copyright 1999-2024 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=8
 
-inherit desktop wrapper
+inherit desktop wrapper xdg-utils
 
 SLOT=0
 
@@ -36,7 +36,7 @@ RESTRICT="bindist mirror splitdebug"
 QA_PREBUILT="opt/${P}/*"
 RDEPEND="
 	dev-libs/libdbusmenu
-	dev-util/lldb
+	dev-util/jetbrains-common
 	media-libs/mesa[X(+)]
 	x11-libs/libX11
 	x11-libs/libXcomposite
@@ -63,8 +63,12 @@ src_install() {
 	make_wrapper "${PN}" "${dir}"/bin/"${PN}".sh
 	newicon bin/${PN}.svg ${PN}.svg
 	make_desktop_entry "${PN}" "RubyMine ${PV}" "${PN}" "Development;IDE;"
+}
 
-	# recommended by: https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
-	dodir /usr/lib/sysctl.d/
-	echo "fs.inotify.max_user_watches = 524288" > "${D}/usr/lib/sysctl.d/30-${PN}-inotify-watches.conf" || die
+pkg_postinst() {
+	xdg_icon_cache_update
+}
+
+pkg_postrm() {
+	xdg_icon_cache_update
 }
