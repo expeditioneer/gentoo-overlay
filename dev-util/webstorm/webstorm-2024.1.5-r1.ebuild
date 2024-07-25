@@ -23,6 +23,7 @@ RDEPEND="
 	dev-libs/libdbusmenu
 	dev-debug/lldb
 	media-libs/mesa[X(+)]
+	net-libs/nodejs[inspector]
 	x11-libs/libX11
 	x11-libs/libXcomposite
 	x11-libs/libXcursor
