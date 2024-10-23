@@ -30,6 +30,10 @@ inherit desktop
 
 QA_PREBUILT="opt/${PN}/*"
 
+RESTRICT+="mirror splitdebug"
+
+BDEPEND+="dev-util/patchelf"
+
 # @FUNCTION: _jetbrains_disable_automatic_updates
 # @INTERNAL
 # @DESCRIPTION:
