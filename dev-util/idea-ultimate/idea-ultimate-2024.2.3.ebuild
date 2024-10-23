@@ -5,7 +5,7 @@ EAPI=8
 
 # LLDBFrontEnd after licensing questions with Gentoo License Team
 UNDESIRED_FILES="
-    lib/async-profiler/aarch64
+	lib/async-profiler/aarch64
 	lib/pty4j
 	plugins/gateway-plugin/lib/remote-dev-workers/remote-dev-worker-linux-arm64
 	plugins/Kotlin/bin/linux/LLDBFrontend
@@ -14,15 +14,17 @@ UNDESIRED_FILES="
 "
 
 FILES_REQUIRES_RPATH_ADAPTION="
-    jbr/lib/jcef_helper
-    jbr/lib/libjcef.so
+	jbr/lib/jcef_helper
+	jbr/lib/libjcef.so
 "
 
-inherit desktop jetbrains wrapper xdg-utils
+inherit desktop jetbrains wrapper
 
 DESCRIPTION="A complete toolset for web, mobile and enterprise development"
 HOMEPAGE="https://www.jetbrains.com/idea"
 SRC_URI="https://download-cdn.jetbrains.com/idea/ideaIU-${PV}.tar.gz -> ${P}.tar.gz"
+
+S="${WORKDIR}/idea-IC-${PV}"
 
 LICENSE="Apache-2.0 BSD BSD-2 CC0-1.0 CC-BY-2.5 CDDL-1.1
 	codehaus-classworlds CPL-1.0 EPL-1.0 EPL-2.0
@@ -31,6 +33,7 @@ LICENSE="Apache-2.0 BSD BSD-2 CC0-1.0 CC-BY-2.5 CDDL-1.1
 	MPL-1.0 MPL-1.1 OFL-1.1 ZLIB"
 
 SLOT="0"
+
 KEYWORDS="~amd64"
 
 DEPEND="
@@ -52,7 +55,7 @@ RDEPEND="${DEPEND}
 	media-libs/harfbuzz
 	media-libs/mesa
 	net-print/cups
-    sys-libs/glibc
+	sys-libs/glibc
 	sys-libs/zlib
 	x11-libs/libXi
 	x11-libs/libXtst
@@ -67,8 +70,6 @@ RDEPEND="${DEPEND}
 	x11-libs/libxkbcommon
 	x11-libs/libXrender
 	x11-libs/pango"
-
-S="${WORKDIR}/idea-IC-${PV}"
 
 QA_PREBUILT="opt/${PN}/*"
 
@@ -93,7 +94,6 @@ src_install() {
 	insinto "${dir}"
 	doins -r *
 	fperms 755 "${dir}"/bin/{format.sh,idea.sh,inspect.sh,fsnotifier}
-
 
 	fperms 755 "${dir}"/jbr/bin/{java,javac,javadoc,jcmd,jdb,jfr,jhsdb,jinfo,jmap,jps,jrunscript,jstack,jstat,jwebserver,keytool,rmiregistry,serialver}
 
