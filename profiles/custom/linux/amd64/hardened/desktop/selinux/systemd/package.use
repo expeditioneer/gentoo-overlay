@@ -1,0 +1,2 @@
+# required by media-gfx/graphviz-12.0.0-r100::gentoo (2025-01-13)
+>=media-libs/gd-2.3.3-r4 fontconfig
